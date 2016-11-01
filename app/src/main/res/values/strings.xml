@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">RT7 Mobile Reward</string>
+    <string name="str_welcomepage_text_1">Welcome to "Your Company" Rewards!</string>
+    <string name="str_welcomepage_text_2">SignIn or Create an Account to begin.</string>
+    <string name="str_join_now">JOIN NOW</string>
+    <string name="str_sign_in">SIGN IN</string>
+</resources>

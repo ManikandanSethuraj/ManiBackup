@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:padding="16dp"
+    android:shape="rectangle">
+
+    <corners android:bottomLeftRadius="@dimen/activity_vertical_margin"
+        android:bottomRightRadius="@dimen/activity_vertical_margin"
+        android:topLeftRadius="@dimen/activity_vertical_margin"
+        android:topRightRadius="@dimen/activity_vertical_margin" />
+
+    <solid android:color="@color/colorGrey"/>
+
+
+
+
+</shape>
