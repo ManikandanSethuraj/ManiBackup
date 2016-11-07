@@ -26,10 +26,10 @@ public class WelcomePage extends AppCompatActivity {
         Intent intent = null;
         switch (v.getId()) {
             case R.id.join_now:
-               // intent = new Intent(this,);
+                intent = new Intent(this,SignUpCardAcceptancePage.class);
                 break;
             case R.id.sign_in:
-                // intent = new Intent(this,);
+                 intent = new Intent(this,LoginPage.class);
                 break;
         }
         if (intent != null){
