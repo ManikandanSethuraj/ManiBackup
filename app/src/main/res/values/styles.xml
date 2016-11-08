@@ -8,11 +8,38 @@
         <!--<item name="colorAccent">@color/colorAccent</item>-->
         <item name="android:actionBarStyle">@style/MyActionBar</item>
 
+        <item name="alertDialogTheme">@style/AppCompatAlertDialogStyle</item>
+
+
+
+
     </style>
 
-    <style name="MyActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
-        <item name="android:background">#00422D</item>
+    <style name="AppNewTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+
+       <item name="actionBarStyle">@color/colorGreen</item>
+        <item name="alertDialogTheme">@style/AppCompatAlertDialogStyle</item>
+
+
+
+    </style>
+
+    <style name="AppCompatAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">@color/colorWhite</item>
+        <item name="android:textColorPrimary">@color/colorWhite</item>
+        <item name="android:background">@color/colorGreen</item>
+    </style>
+
+    <style name="ActionBarNew" parent="AppTheme">
+        <item name="android:background">@color/colorGreen</item>
+        <item name="android:textColor">@color/colorWhite</item>
+
+    </style>
+
+    <style name="MyActionBar" parent="Widget.AppCompat.Toolbar">
+        <item name="android:background">@color/colorGreen</item>
         <item name="android:labelTextSize">15sp</item>
+
     </style>
 
     <style name="AppThemeNoTitle" parent="@style/Theme.AppCompat.Light.NoActionBar">

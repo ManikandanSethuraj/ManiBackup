@@ -6,7 +6,9 @@
     <string name="str_signup_cardacceptance_2">"Company Rewards Card?"</string>
     <string name="str_join_now">JOIN NOW</string>
     <string name="str_sign_in">SIGN IN</string>
+    <string name="str_sign_up">SIGN UP</string>
     <string name="title_activity_sign_up_full_cus_acc">SignUpFullCusAccActivity</string>
+    <string name="str_sign_up_card_detail_info">"Enter the card number from the back of the card"</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 

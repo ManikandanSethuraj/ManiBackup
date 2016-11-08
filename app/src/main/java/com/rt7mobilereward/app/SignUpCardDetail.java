@@ -1,14 +1,17 @@
 package com.rt7mobilereward.app;
 
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -22,13 +25,46 @@ public class SignUpCardDetail extends AppCompatActivity {
 
     EditText cardDetailSignUp;
     Button checkCard;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+       // requestWindowFeature(Window.FEATURE_ACTION_BAR);
+
+       // requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
         setContentView(R.layout.activity_sign_up_card_detail);
+      //  getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.title_bar);
+
+
+//        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+//        actionBar.setDisplayOptions( ActionBar.DISPLAY_SHOW_CUSTOM);
+//        actionBar.setCustomView(R.layout.title_bar);
+//
+//        View customActionBarView = actionBar.getCustomView();
+        View view = getLayoutInflater().inflate(R.layout.title_bar, null);
+
+        ActionBar.LayoutParams params = new ActionBar.LayoutParams(
+                ActionBar.LayoutParams.MATCH_PARENT,
+                ActionBar.LayoutParams.MATCH_PARENT,
+                Gravity.CENTER);
+
+
+        TextView Title = (TextView) view.findViewById(R.id.myTitle);
+        Title.setText(R.string.str_sign_up);
+
+//
+       getSupportActionBar().setCustomView(view,params);
+        getSupportActionBar().setDisplayShowCustomEnabled(true); //show custom title
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+
+
+
+
         cardDetailSignUp = (EditText)findViewById(R.id.cardnumber_detail_edit);
         checkCard = (Button)findViewById(R.id.btn_check_card);
 
+
+        // Clicked when the User says 'YES' he has a Card with him.
         checkCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -60,7 +96,8 @@ public class SignUpCardDetail extends AppCompatActivity {
                                 Boolean hasAccount = jsonObjectOther.getBoolean("isHasAccount");
 
                                 if (foundCustomer == false && hasAccount == false){
-                                    checkTheLogic(foundCustomer, hasAccount, cardNumber, emailAddress);
+
+                                    checkTheLogic(foundCustomer, hasAccount, cardNumber, null);
 
                                 } else {
                                     JSONObject jsonObjectAnother = jsonObjectOther.getJSONObject("foundCustomer");
@@ -113,7 +150,7 @@ public class SignUpCardDetail extends AppCompatActivity {
                 // RTServer = 1, Order Site = 1
                 intentpositive = new Intent(SignUpCardDetail.this,LoginPage.class);
                 intentpositive.putExtra("Email",email);
-                showDialog("Card Details Exists!!","Log In","OK",null,intentpositive,null);
+                showDialog("Account Exists !!","Log In","OK",null,intentpositive,null);
 
 
             }else {
@@ -143,7 +180,7 @@ public class SignUpCardDetail extends AppCompatActivity {
     }
 
     public void showDialog(String title, CharSequence message, String positiveButton, String negativeButton, final Intent positiveIntent , final Intent negativeIntent ) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(SignUpCardDetail.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(SignUpCardDetail.this, R.style.AppCompatAlertDialogStyle);
         if (title != null) builder.setTitle(title);
 
         builder.setMessage(message);
@@ -163,7 +200,7 @@ public class SignUpCardDetail extends AppCompatActivity {
         }
         if (negativeButton!=null) {
             if (negativeIntent!=null){
-                builder.setPositiveButton(negativeButton, new DialogInterface.OnClickListener() {
+                builder.setNegativeButton(negativeButton, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         startActivity(negativeIntent);

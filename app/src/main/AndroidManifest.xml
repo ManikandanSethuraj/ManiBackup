@@ -10,11 +10,13 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:theme="@style/AppTheme"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        >
         <activity
             android:name=".SplashScreen"
-            android:theme="@style/AppThemeNoTitle">
+            android:theme="@style/AppThemeNoTitle"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,21 +25,30 @@
         </activity>
         <activity
             android:name=".WelcomePage"
-            android:theme="@style/AppThemeNoTitle" />
+            android:theme="@style/AppThemeNoTitle"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".SignUpShortPage"
-            android:label="SIGN UP" />
+            android:label="SIGN UP"
+
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".LoginPage"
-            android:label="SIGN IN" />
+            android:label="SIGN IN"
+
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".SignUpCardAcceptancePage"
-            android:label="SIGN UP" />
-        <activity android:name=".SignUpCardDetail" />
+            android:label="SIGN UP"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".SignUpCardDetail"
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".SignUpFullCusAccPage"
             android:label="@string/title_activity_sign_up_full_cus_acc_page"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

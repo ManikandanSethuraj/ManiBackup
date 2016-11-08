@@ -19,10 +19,10 @@ public class CheckAccountEmailRequest extends StringRequest {
 
 
 
-    public CheckAccountEmailRequest(String email, Response.Listener<String> listener){
+    public CheckAccountEmailRequest(String email_short_signup, Response.Listener<String> listener,Response.ErrorListener errorListener){
         super(Method.POST,LOGIN_REQUEST_URL,listener,null);
         prams = new HashMap<>();
-        prams.put("card_number",email);
+        prams.put("email",email_short_signup);
 
     }
 

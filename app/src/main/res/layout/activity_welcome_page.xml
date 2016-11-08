@@ -7,14 +7,14 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@color/colorWhite"
+    android:background="@color/colorGreyText"
     android:orientation="vertical"
     tools:context="com.rt7mobilereward.app.WelcomePage">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorWhite"
+        android:background="@color/colorGreyText"
         android:orientation="vertical"
         android:layout_weight="3">
 
@@ -23,12 +23,13 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.75"
             android:layout_gravity="center"
-            android:src="@drawable/your_company_logo_grey"/>
+            android:src="@drawable/philly_pretzel_logo"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorWhite"
+            android:background="@color/colorGreyText"
+            android:textColor="@color/colorWhite"
             android:layout_weight="0.075"
             android:text="@string/str_welcomepage_text_1"
             android:textStyle="bold"
@@ -37,7 +38,8 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorWhite"
+            android:background="@color/colorGreyText"
+            android:textColor="@color/colorWhite"
             android:layout_weight="0.075"
             android:text="@string/str_welcomepage_text_2"
             android:textStyle="bold"
@@ -49,14 +51,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorWhite"
+        android:background="@color/colorGreyText"
         android:layout_weight="4">
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorWhite"
+        android:background="@color/colorGreyText"
         android:orientation="vertical"
         android:layout_weight="1">
 
@@ -82,29 +84,13 @@
             android:text="@string/str_sign_in"
             android:id="@+id/sign_in"
             android:layout_marginTop="5dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="15dp"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:onClick="ButtonOnClick"
             android:layout_weight="1"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorWhite"
-            android:layout_weight="0.75"
-            android:text="@string/str_welcomepage_text_1"
-            android:textStyle="bold"
-            android:gravity="bottom|center" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorWhite"
-            android:layout_weight="0.75"
-            android:text="@string/str_welcomepage_text_2"
-            android:textStyle="bold"
-            android:gravity="top|center" />
 
 
 

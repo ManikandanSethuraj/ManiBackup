@@ -1,10 +1,13 @@
 package com.rt7mobilereward.app;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class SignUpCardAcceptancePage extends AppCompatActivity {
 
@@ -13,7 +16,25 @@ public class SignUpCardAcceptancePage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+      //  requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
         setContentView(R.layout.activity_sign_up_card_acceptance_page);
+       // getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.title_bar);
+//       View view = getLayoutInflater().inflate(R.layout.title_bar, null);
+        View view = getLayoutInflater().inflate(R.layout.title_bar, null);
+        ActionBar.LayoutParams params = new ActionBar.LayoutParams(
+                ActionBar.LayoutParams.MATCH_PARENT,
+                ActionBar.LayoutParams.MATCH_PARENT,
+                Gravity.CENTER);
+
+
+        TextView Title = (TextView) view.findViewById(R.id.myTitle);
+        Title.setText(R.string.str_sign_up);
+
+//
+        getSupportActionBar().setCustomView(view,params);
+        getSupportActionBar().setDisplayShowCustomEnabled(true); //show custom title
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+
         yesHaveCard = (Button) findViewById(R.id.btn_yes_card);
         noDontHaveCard = (Button) findViewById(R.id.btn_no_card);
 
