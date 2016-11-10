@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content_sign_up_full_cus_acc_page"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.rt7mobilereward.app.SignUpFullCusAccPage"
+    tools:showIn="@layout/activity_sign_up_full_cus_acc_page">
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Personal Information"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/text_size_edit"
+                />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/edit_text_shape"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:textSize="@dimen/text_size_edit"
+                android:inputType="textPersonName|textCapWords"
+                android:id="@+id/firstname_signupfull"
+                android:hint="  First Name*"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/edit_text_shape"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:inputType="textPersonName|textCapWords"
+                android:textSize="@dimen/text_size_edit"
+                android:id="@+id/lastname_signupfull"
+                android:hint="  Last Name*"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/edit_text_shape"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:textSize="@dimen/text_size_edit"
+                android:inputType="date"
+                android:id="@+id/dob_signupfull"
+                android:hint="  Date of Birth*"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/edit_text_shape"
+                android:layout_marginLeft="10dp"
+                android:inputType="textPostalAddress|textCapSentences"
+                android:textSize="@dimen/text_size_edit"
+                android:id="@+id/addline1_signupfull"
+                android:hint="  Address Line 1*"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/edit_text_shape"
+                android:layout_marginLeft="10dp"
+                android:textSize="@dimen/text_size_edit"
+                android:inputType="textPostalAddress|textCapSentences"
+                android:id="@+id/addline2_signupfull"
+                android:hint="  Address Line 2"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/edit_text_shape"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:inputType="text|textCapWords"
+                android:textSize="@dimen/text_size_edit"
+                android:id="@+id/city_signupfull"
+                android:hint="  City*"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/edit_text_shape"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:textSize="@dimen/text_size_edit"
+                android:inputType="text|textCapWords"
+                android:id="@+id/state_signupfull"
+                android:hint="  State*"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/edit_text_shape"
+                android:layout_marginLeft="10dp"
+                android:inputType="number"
+                android:textSize="@dimen/text_size_edit"
+                android:maxLength="5"
+                android:id="@+id/zipcode_signupfull"
+                android:hint="  Zip Code*"/>
+
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/edit_text_shape"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:textSize="@dimen/text_size_edit"
+                android:inputType="phone"
+                android:maxLength="12"
+                android:id="@+id/phone_signupfull"
+                android:hint="  Phone Number*" />
+
+
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/edit_text_shape"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:inputType="none"
+                android:id="@+id/country_signupfull"
+                android:textSize="@dimen/text_size_edit"
+                android:hint="  United States"/>
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Account Security"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/text_size_edit"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/edit_text_shape"
+                android:layout_marginLeft="10dp"
+                android:textSize="@dimen/text_size_edit"
+                android:inputType="text"
+                android:id="@+id/card_signupfull"
+                android:hint="  Card Number"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/edit_text_shape"
+                android:layout_marginLeft="10dp"
+                android:textSize="@dimen/text_size_edit"
+                android:inputType="textEmailAddress"
+                android:id="@+id/email_signupfull"
+                android:hint="  Email Address"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/edit_text_shape"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:textSize="@dimen/text_size_edit"
+                android:inputType="textPassword"
+                android:id="@+id/password_signupfull"
+                android:hint="  Create a Password"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+
+                android:background="@drawable/welcomepage_btn_shape"
+                android:text="Submit"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:id="@+id/submit_signupfull"
+                android:textColor="@color/colorWhite" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+
+
+</ScrollView>
