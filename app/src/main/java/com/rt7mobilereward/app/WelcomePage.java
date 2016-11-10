@@ -8,8 +8,8 @@ import android.widget.Button;
 
 public class WelcomePage extends AppCompatActivity {
 
-    Button btnJoinNow;
-    Button btnSignIn;
+    private Button btnJoinNow;
+    private Button btnSignIn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

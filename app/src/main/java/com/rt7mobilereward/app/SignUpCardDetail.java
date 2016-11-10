@@ -23,8 +23,8 @@ import org.json.JSONObject;
 
 public class SignUpCardDetail extends AppCompatActivity {
 
-    EditText cardDetailSignUp;
-    Button checkCard;
+    private EditText cardDetailSignUp;
+    private Button checkCard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -150,6 +150,7 @@ public class SignUpCardDetail extends AppCompatActivity {
                 // RTServer = 1, Order Site = 1
                 intentpositive = new Intent(SignUpCardDetail.this,LoginPage.class);
                 intentpositive.putExtra("Email",email);
+                intentnegative.putExtra("CardNumber",number);
                 showDialog("Account Exists !!","Log In","OK",null,intentpositive,null);
 
 
@@ -157,6 +158,7 @@ public class SignUpCardDetail extends AppCompatActivity {
                 // RTServer = 1, Order Site = 0
                 intentpositive = new Intent(SignUpCardDetail.this,SignUpShortPage.class);
                 intentpositive.putExtra("Email",email);
+                intentnegative.putExtra("CardNumber",number);
                 startActivity(intentpositive);
 
 
@@ -171,6 +173,7 @@ public class SignUpCardDetail extends AppCompatActivity {
             }else {
                 // RTServer = 0, Order Site = 0
                  intentnegative = new Intent(SignUpCardDetail.this,SignUpShortPage.class);
+                intentnegative.putExtra("CardNumber",number);
                 showDialog("Sign Up Error !!","Card Details Not Available","Try Again","SignUp Anyway",null,intentnegative);
 
             }

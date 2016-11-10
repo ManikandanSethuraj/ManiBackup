@@ -2,6 +2,7 @@ package com.rt7mobilereward.app;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -22,10 +23,10 @@ import org.json.JSONObject;
 public class LoginPage extends AppCompatActivity {
 
 
-    EditText emailAddress;
-    EditText passWord;
-    Button cancel;
-    Button signIn;
+    private EditText emailAddress;
+    private EditText passWord;
+    private Button cancel;
+    private Button signIn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +52,16 @@ public class LoginPage extends AppCompatActivity {
             }
         });
         emailAddress.requestFocus();
+
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = null;
+                intent = new Intent(LoginPage.this,WelcomePage.class);
+                startActivity(intent);
+            }
+        });
 
         signIn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,7 +97,10 @@ public class LoginPage extends AppCompatActivity {
                     }
                 };
 
-                Response.Listener<String> responseListener = new Response.Listener<String>() {
+
+                final Response.Listener<String> responseListener = new Response.Listener<String>() {
+
+
 
                     @Override
                     public void onResponse(String response) {
@@ -102,9 +116,14 @@ public class LoginPage extends AppCompatActivity {
                                     JSONObject jsonAnother = jsonObjectResponse.getJSONObject("data");
                                     JSONObject jsonOther = jsonAnother.getJSONObject("user");
                                     String Name = jsonOther.getString("firstname");
+                                    String Email = jsonOther.getString("email");
                                     Log.d("Response Value:::::::", response);
                                     Log.d("StatusCode:::::::", String.valueOf(jsonResponse));
                                     Log.d("Name", Name);
+                                    Intent intent = new Intent(LoginPage.this,MainActivity.class);
+                                    intent.putExtra("UserName",Name);
+                                    intent.putExtra("email",Email);
+                                    startActivity(intent);
 
                                 } else {
 
@@ -121,13 +140,31 @@ public class LoginPage extends AppCompatActivity {
                     }
                 };
 
-//
+
 
                 LoginRequest loginRequest = new LoginRequest(userName, password, responseListener, errorListener);
                 RequestQueue requestQueue = Volley.newRequestQueue(LoginPage.this);
                 requestQueue.add(loginRequest);
+             //   String value = loginRequest.getHeaderFile();
+            //    Log.d("The Value back:::",value);
             }
         });
 
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        super.onBackPressed();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

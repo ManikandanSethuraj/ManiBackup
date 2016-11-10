@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -62,33 +63,38 @@
         android:orientation="vertical"
         android:layout_weight="1">
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/welcomepage_btn_shape"
-            android:textColor="@color/colorWhite"
-            android:text="@string/str_join_now"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_weight="1"
-            android:onClick="ButtonOnClick"
-            android:id="@+id/join_now"/>
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/welcomepage_btn_shape"
-            android:textColor="@color/colorWhite"
-            android:text="@string/str_sign_in"
-            android:id="@+id/sign_in"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="15dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:onClick="ButtonOnClick"
-            android:layout_weight="1"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/welcomepage_btn_shape"
+                android:textColor="@color/colorWhite"
+                android:text="@string/str_join_now"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_weight="1"
+                android:onClick="ButtonOnClick"
+                android:id="@+id/join_now"
+                style="?android:attr/borderlessButtonStyle"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/welcomepage_btn_shape"
+                android:textColor="@color/colorWhite"
+                android:text="@string/str_sign_in"
+                android:id="@+id/sign_in"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:onClick="ButtonOnClick"
+                android:layout_weight="1"
+                style="?android:attr/borderlessButtonStyle"/>
+
 
 
 

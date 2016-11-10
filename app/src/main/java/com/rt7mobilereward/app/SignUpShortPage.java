@@ -25,10 +25,10 @@ import org.json.JSONObject;
 
 public class SignUpShortPage extends AppCompatActivity {
 
-    EditText email, password, passConfirm;
-    Button submitShotSignUp;
-    String emailStr = null;
-    String passStr = null, passConStr = null;
+     private EditText email, password, passConfirm;
+    private Button submitShotSignUp;
+    private String emailStr = "", numberStr = "";
+    private String passStr = "", passConStr = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,11 +56,33 @@ public class SignUpShortPage extends AppCompatActivity {
         submitShotSignUp = (Button)findViewById(R.id.btn_shortsignup_submit);
 
 
+        email.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                email.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        InputMethodManager imm = (InputMethodManager)SignUpShortPage.this.
+                                getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.showSoftInput(email, InputMethodManager.SHOW_IMPLICIT);
+                    }
+                });
+            }
+        });
+
+        email.requestFocus();
+
+
         Bundle extras = getIntent().getExtras();
         if (extras != null){
             String email_bundle = extras.getString("email");
-            email.setText(email_bundle);
-            email.setEnabled(false);
+             numberStr = extras.getString("CardNumber");
+            if (email_bundle != ""){
+                email.setEnabled(true);
+            }else {
+                email.setText(email_bundle);
+                email.setEnabled(false);
+            }
 
         }
 
@@ -84,7 +106,7 @@ public class SignUpShortPage extends AppCompatActivity {
                 emailStr = email.getText().toString();
                 passStr = password.getText().toString();
                 passConStr = passConfirm.getText().toString();
-                if (emailStr == null || passStr == null || passConStr == null){
+                if (emailStr.equals("") || passStr.equals("") || passConStr.equals("")){
                     showDialog("Error !!","Enter All Details","OK",null,null,null);
                 }else {
                     if (passConStr.equals(passStr)){
@@ -116,7 +138,13 @@ public class SignUpShortPage extends AppCompatActivity {
 
                                         if (foundCustomer == false && hasAccount == false){
 
-                                            checkTheLogic(foundCustomer, hasAccount, null, null);
+                                           if (numberStr.equals("")){
+                                               checkTheLogic(foundCustomer, hasAccount, emailStr, passStr,numberStr);
+
+                                           }else {
+                                               checkTheLogic(foundCustomer, hasAccount, emailStr, passStr,numberStr);
+                                           }
+
 
                                         } else {
                                             JSONObject jsonObjectAnother = jsonObjectOther.getJSONObject("foundCustomer");
@@ -133,7 +161,12 @@ public class SignUpShortPage extends AppCompatActivity {
 
 
 
-                                            checkTheLogic(foundCustomer, hasAccount, emailStr, passStr);
+                                            if (numberStr.equals("")){
+                                                checkTheLogic(foundCustomer, hasAccount, emailStr, passStr,numberStr);
+
+                                            }else {
+                                                checkTheLogic(foundCustomer, hasAccount, emailStr, passStr,numberStr);
+                                            }
 
                                         }
 
@@ -163,7 +196,7 @@ public class SignUpShortPage extends AppCompatActivity {
 
     }
 
-    private void checkTheLogic(Boolean foundinServer, Boolean foundinOrderSite, String email, String pass) {
+    private void checkTheLogic(Boolean foundinServer, Boolean foundinOrderSite, String email, String pass, String number) {
 
         Intent intentpositive,intentnegative = null;
 
@@ -196,8 +229,11 @@ public class SignUpShortPage extends AppCompatActivity {
             }else {
                 // RTServer = 0, Order Site = 0
                 intentnegative = new Intent(SignUpShortPage.this,SignUpFullCusAccPage.class);
+                Log.d("Email Sent:::",email.toString());
+                Log.d("Password Sent:::",pass.toString());
                 intentnegative.putExtra("Email",email);
                 intentnegative.putExtra("Password",pass);
+                intentnegative.putExtra("CardNumber",number);
                 startActivity(intentnegative);
 
                 // showDialog("Sign Up Error !!","Card Details Not Available","Try Again","SignUp Anyway",null,intentnegative);

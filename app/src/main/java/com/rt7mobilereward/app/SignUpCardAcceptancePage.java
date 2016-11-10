@@ -11,8 +11,8 @@ import android.widget.TextView;
 
 public class SignUpCardAcceptancePage extends AppCompatActivity {
 
-    Button yesHaveCard;
-    Button noDontHaveCard;
+    private Button yesHaveCard;
+    private Button noDontHaveCard;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

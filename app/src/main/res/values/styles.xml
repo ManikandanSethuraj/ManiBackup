@@ -11,15 +11,12 @@
         <item name="alertDialogTheme">@style/AppCompatAlertDialogStyle</item>
 
 
-
-
     </style>
 
     <style name="AppNewTheme" parent="Theme.AppCompat.Light.DarkActionBar">
 
-       <item name="actionBarStyle">@color/colorGreen</item>
+        <item name="actionBarStyle">@color/colorGreen</item>
         <item name="alertDialogTheme">@style/AppCompatAlertDialogStyle</item>
-
 
 
     </style>
@@ -58,5 +55,6 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
 
 </resources>
