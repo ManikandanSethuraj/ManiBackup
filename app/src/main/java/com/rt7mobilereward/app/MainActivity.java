@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,9 +31,12 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
 
         Intent intent = getIntent();
-        if (intent != null) {
+
             String email_bundle = intent.getExtras().getString("Email");
-        }
+            String tokenid = intent.getExtras().getString("Token");
+            Log.d("Toekn::",tokenid);
+            Log.d("Email::",email_bundle);
+
 
     }
 

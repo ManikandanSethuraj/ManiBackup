@@ -3,6 +3,7 @@ package com.rt7mobilereward.app;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
 import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
 
@@ -19,6 +20,7 @@ public class EnrollRequest extends StringRequest {
     private static final String API_KEY = "09Afi504Nz6gYU2hGBohMtLKG3HwAjRPF";
     private static final String ENTITY_API_KEY = "09Alb0A7k1dsXFZWyRnvtjoL8VzY2kuVP";
     private Map<String, String> prams;
+    private static String headerFile;
 
 
 
@@ -65,6 +67,26 @@ public class EnrollRequest extends StringRequest {
         Log.d("All the Data::",prams.toString());
         return prams;
 
+    }
+    @Override
+    protected void deliverResponse(String response) {
+        Log.d("DeliverResponse",response.toString());
+        String first = "{";
+        String at = "\"at\"";
+        String second = ":";
+        String doublequotes = "\"";
+        String cama = ",";
+        String all = "\"all\"";
+        String res = first+at+second+doublequotes+headerFile+doublequotes+cama+all+second.concat(response)+"}";
+        super.deliverResponse(res);
+    }
+
+    @Override
+    protected Response<String> parseNetworkResponse(NetworkResponse response) {
+        headerFile = response.headers.get("a_t");
+        //  response.headers.put("App",head);
+        Log.d("parseNet::",response.data.toString());
+        return super.parseNetworkResponse(response);
     }
 
 

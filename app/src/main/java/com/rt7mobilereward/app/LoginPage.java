@@ -106,14 +106,17 @@ public class LoginPage extends AppCompatActivity {
                     public void onResponse(String response) {
                         if (response != null) {
                         try {
-
-
-
+                                Log.d("Response Looking:::",response.toString());
                                 JSONObject jsonObjectResponse = new JSONObject(response);
-                                int jsonResponse = jsonObjectResponse.getInt("statusCode");
+                            String token = jsonObjectResponse.getString("at");
+                            Log.d("AT::::::::::",token);
+                            JSONObject firstObject = jsonObjectResponse.getJSONObject("all");
+                                int jsonResponse = firstObject.getInt("statusCode");
+
                                 if (jsonResponse == 0) {
 
-                                    JSONObject jsonAnother = jsonObjectResponse.getJSONObject("data");
+
+                                    JSONObject jsonAnother = firstObject.getJSONObject("data");
                                     JSONObject jsonOther = jsonAnother.getJSONObject("user");
                                     String Name = jsonOther.getString("firstname");
                                     String Email = jsonOther.getString("email");
@@ -122,7 +125,8 @@ public class LoginPage extends AppCompatActivity {
                                     Log.d("Name", Name);
                                     Intent intent = new Intent(LoginPage.this,MainActivity.class);
                                     intent.putExtra("UserName",Name);
-                                    intent.putExtra("email",Email);
+                                    intent.putExtra("Email",Email);
+                                    intent.putExtra("Token",token);
                                     startActivity(intent);
 
                                 } else {
@@ -145,8 +149,8 @@ public class LoginPage extends AppCompatActivity {
                 LoginRequest loginRequest = new LoginRequest(userName, password, responseListener, errorListener);
                 RequestQueue requestQueue = Volley.newRequestQueue(LoginPage.this);
                 requestQueue.add(loginRequest);
-             //   String value = loginRequest.getHeaderFile();
-            //    Log.d("The Value back:::",value);
+               // String va = loginRequest.getHeaderFile();
+                Log.d("The Value back:::","This is nothing");
             }
         });
 

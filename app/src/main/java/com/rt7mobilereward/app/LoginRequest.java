@@ -19,7 +19,7 @@ public class LoginRequest extends StringRequest {
     private static final String API_KEY = "09Afi504Nz6gYU2hGBohMtLKG3HwAjRPF";
     private static final String ENTITY_API_KEY = "09Alb0A7k1dsXFZWyRnvtjoL8VzY2kuVP";
     private Map<String, String> prams;
-    public String headerFile;
+    private static String  headerFile;
 
 
 
@@ -30,9 +30,9 @@ public class LoginRequest extends StringRequest {
         prams.put("pass",passWord);
     }
 
-    public String getHeaderFile() {
-        return headerFile;
-    }
+
+
+
 
     @Override
     public Map<String, String> getHeaders() throws AuthFailureError {
@@ -52,16 +52,41 @@ public class LoginRequest extends StringRequest {
 
     @Override
     protected void deliverResponse(String response) {
-        super.deliverResponse(response);
+        Log.d("DeliverResponse",response.toString());
+        String first = "{";
+        String at = "\"at\"";
+        String second = ":";
+        String doublequotes = "\"";
+        String cama = ",";
+        String all = "\"all\"";
+        String res = first+at+second+doublequotes+headerFile+doublequotes+cama+all+second.concat(response)+"}";
+        super.deliverResponse(res);
     }
 
     @Override
     protected Response<String> parseNetworkResponse(NetworkResponse response) {
-        //System.out.println(Responseresponse.headers.get("a_t"));
-        Log.d("Header File::",response.headers.get("a_t"));
-        headerFile =  response.headers.get("a_t");
+        headerFile = response.headers.get("a_t");
+         //  response.headers.put("App",head);
+        Log.d("parseNet::",response.data.toString());
         return super.parseNetworkResponse(response);
     }
+
+
+
+
+    //    @Override
+//    protected Response<String> parseNetworkResponse(NetworkResponse response) {
+//        //System.out.println(Responseresponse.headers.get("a_t"));
+//        String  value;
+//        //value = new HashMap<>();
+//        value = response.headers.get("a_t");
+//        setHeaderFile(value);
+//         // response.data.toString();
+//       Log.d("Header File::",response.headers.get("a_t"));
+//        String responsevalue = value.concat(response.data.toString());
+//      //  headerFile =  response.headers.get("a_t");
+//        return Response.success(responsevalue,null);
+//    }
 
 
 }

@@ -34,6 +34,7 @@ public class SignUpFullCusAccPage extends AppCompatActivity {
     private String phone = "";
     final Calendar myCalendar = Calendar.getInstance();
     private String lastChar = " ";
+    private String token;
 
 
     @Override
@@ -270,18 +271,26 @@ public class SignUpFullCusAccPage extends AppCompatActivity {
                 if (response != null) {
                     try {
 
-                       // NetworkResponse networkResponse = response;
-
+                        Log.d("Response Looking:::",response.toString());
                         JSONObject jsonObjectResponse = new JSONObject(response);
-                        int jsonResponse = jsonObjectResponse.getInt("statusCode");
+                        token = jsonObjectResponse.getString("at");
+                        Log.d("AT::::::::::",token);
+                        JSONObject firstObject = jsonObjectResponse.getJSONObject("all");
+                        int jsonResponse = firstObject.getInt("statusCode");
                         if (jsonResponse == 0) {
 
-                            JSONObject jsonAnother = jsonObjectResponse.getJSONObject("data");
+                            JSONObject jsonAnother = firstObject.getJSONObject("data");
                             JSONObject jsonOther = jsonAnother.getJSONObject("user");
+                            String emailintent = jsonAnother.getString("email");
                             String Name = jsonOther.getString("firstname");
                             Log.d("Response Value:::::::", response);
                             Log.d("StatusCode:::::::", String.valueOf(jsonResponse));
                             Log.d("Name", Name);
+
+                            Intent intent = new Intent(SignUpFullCusAccPage.this, MainActivity.class);
+                            intent.putExtra("Token",token);
+                            intent.putExtra("Email",emailintent);
+                            startActivity(intent);
 
                         } else {
 
