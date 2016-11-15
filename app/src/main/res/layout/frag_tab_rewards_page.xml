@@ -4,13 +4,112 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorGreyBgm"
+    android:background="@color/colorWhite"
     tools:context="com.rt7mobilereward.app.FragTabRewardsPage">
 
-    <ImageView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/philly_pretzel_logo"/>
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_weight="10">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="My Card"
+            android:textSize="45px"
+            android:textColor="@color/colorBlack"
+            android:textAlignment="center"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:layout_weight="2"
+            android:textStyle="bold" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_weight="5"
+            android:src="@drawable/rewards_card_gift"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_weight="3"
+            android:textSize="90px"
+            android:clickable="true"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:text="ASDAAD"
+            android:background="@color/colorWhite"
+            android:textColor="@color/colorBlack"
+            android:id="@+id/rewards_balance"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginBottom="5dp"
+            android:id="@+id/time_update_rewards"
+            android:textAlignment="center"
+            android:textColor="@color/colorBlack"
+            android:text="Time"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_weight="5">
+<ImageView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:src="@drawable/promo_button"
+    android:layout_weight="4"/>
+
+<Button
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="@string/str_show_bar_code"
+    android:background="@color/colorGreen"
+    android:textColor="@color/colorWhite"
+    android:gravity="center"
+    android:textStyle="bold"
+    android:id="@+id/rewards_showbarcode_btn"
+    android:layout_weight="0.5"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_weight="0.5"
+            android:weightSum="2"
+            android:background="@color/colorGreen">
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/str_reload_btn_text"
+                android:gravity="center"
+                android:background="@color/colorWhite"
+                android:textColor="@color/colorBlack"
+                android:id="@+id/rewards_reload_btn"
+                android:textStyle="bold"
+                android:layout_marginRight="0.5dp"
+                android:layout_weight="1"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorWhite"
+                android:textColor="@color/colorBlack"
+                android:textStyle="bold"
+                android:layout_marginLeft="0.5dp"
+                android:id="@+id/rewards_settings_btn"
+                android:text="@string/str_settings_btn_text"
+                android:layout_weight="1"/>
+
+
+
+        </LinearLayout>
+    </LinearLayout>
+
 
 
 </LinearLayout>

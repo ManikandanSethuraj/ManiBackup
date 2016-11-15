@@ -10,6 +10,9 @@
     <string name="title_activity_sign_up_full_cus_acc">SignUpFullCusAccActivity</string>
     <string name="str_sign_up_card_detail_info">"Enter the card number from the back of the card"</string>
     <string name="str_sign_up_short_page">"Enter the Details for Sign Up"</string>
+    <string name="str_show_bar_code">SHOW BARCODE</string>
+    <string name="str_reload_btn_text">RELOAD</string>
+    <string name="str_settings_btn_text">SETTINGS</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 
@@ -99,10 +102,15 @@
         "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
         "when a user tries to pick up one of cards.\n\n"
     </string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">SETTINGS</string>
     <string name="title_activity_sign_up_full_cus_acc_page">SignUpFullCusAccPage</string>
     <string name="title_activity_main">MainActivity</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_navigation_page">Account Details</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="title_activity_maps">Map</string>
 </resources>

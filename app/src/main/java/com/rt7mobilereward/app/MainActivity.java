@@ -17,12 +17,18 @@ public class MainActivity extends AppCompatActivity {
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    public FragTabRewardsPage fragTabRewardsPage;
+    public FragTabOrdersPage fragTabOrdersPage;
+    public FragTabGiftPage fragTabGiftPage;
+    private Bundle bundle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);
+        bundle = new Bundle();
+        FragTabRewardsPage fragTabRewardsPage = new FragTabRewardsPage();
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
@@ -32,21 +38,57 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-            String email_bundle = intent.getExtras().getString("Email");
-            String tokenid = intent.getExtras().getString("Token");
-            Log.d("Toekn::",tokenid);
-            Log.d("Email::",email_bundle);
+            if (intent != null){
+                String email_bundle = intent.getExtras().getString("Email");
+                String tokenid = intent.getExtras().getString("Token");
+                String username = intent.getExtras().getString("UserName");
+                String cardnumber = intent.getExtras().getString("CardNumber");
+                String rewardbalance = intent.getExtras().getString("CardNumber");
+                String giftbalance = intent.getExtras().getString("GiftBalance");
+                Log.d("Toekn::",tokenid);
+                Log.d("Email::",email_bundle);
+
+                bundle.putString("Eamil",email_bundle);
+                String rewardss = "";
+                bundle.putString("Token",tokenid);
+                bundle.putString("UserName",username);
+                bundle.putString("CardNumber",cardnumber);
+                bundle.putString("RewardsBalance",rewardbalance);
+                bundle.putString("GiftBalance",giftbalance);
+
+                Log.d("Rewards::::",rewardbalance);
+                rewardss = bundle.getString("RewardsBalance");
+                Log.d("Rewewewe:::",rewardss);
+              //  fragTabRewardsPage.setArguments(bundle);
+
+            }
+
+
+
+
+
+
 
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new FragTabStoresPage(), "STORES");
+        Log.d("All in All","All in All");
+        adapter.addFragment(new FragTabOrdersPage(), "STORES");
         adapter.addFragment(new FragTabRewardsPage(), "REWARDS");
-        adapter.addFragment(new FragTabStoresPage(), "GIFT");
-        adapter.addFragment(new FragTabRewardsPage(), "ORDERS");
+        Log.d("All in All","All in All");
+        adapter.addFragment(new FragTabGiftPage(), "GIFT");
+        adapter.addFragment(new FragTabOrdersPage(), "ORDERS");
+        Log.d("All in All","All in All");
         viewPager.setAdapter(adapter);
+        viewPager.setCurrentItem(1);
+
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
@@ -70,11 +112,19 @@ public class MainActivity extends AppCompatActivity {
         public void addFragment(Fragment fragment, String title) {
             mFragmentList.add(fragment);
             mFragmentTitleList.add(title);
+            fragment.setArguments(bundle);
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
             return mFragmentTitleList.get(position);
         }
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
     }
 }

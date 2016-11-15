@@ -1,7 +1,11 @@
 package com.rt7mobilereward.app;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -68,13 +72,21 @@ public class SignUpCardDetail extends AppCompatActivity {
         checkCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+               if (isInternetAvailable()){
+
                 final String cardNumber = cardDetailSignUp.getText().toString();
 
-
+                final ProgressDialog progressbar;
+                progressbar = new ProgressDialog(SignUpCardDetail.this);
+                progressbar.setTitle("Please Wait!!");
+                progressbar.setMessage("Logging In");
+                progressbar.setCancelable(false);
+                progressbar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                progressbar.show();
                 Response.ErrorListener errorListener = new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                        progressbar.dismiss();
                         String LoginError = error.toString();
                         Intent intent = new Intent(SignUpCardDetail.this,SignUpShortPage.class);
                         showDialog("Card Not Found!!","Want to Enter Again?","OK","Sign Up Without Card",null,intent);
@@ -86,6 +98,7 @@ public class SignUpCardDetail extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         try {
+                            progressbar.dismiss();
                             JSONObject jsonObjectResponse = new JSONObject(response);
                             int jsonResponse = jsonObjectResponse.getInt("statusCode");
                             if (jsonResponse==0){
@@ -133,12 +146,36 @@ public class SignUpCardDetail extends AppCompatActivity {
               //  LoginRequest loginRequest = new LoginRequest(userName, password, responseListener);
              //   RequestQueue requestQueue = Volley.newRequestQueue(LoginPage.this);
                // requestQueue.add(loginRequest);
+            }else {
+                   showDialog("No Internet !!","Check your Connection.","OK",null,null,null);
+               }
             }
         });
 
 
 
 
+    }
+
+    public boolean isInternetAvailable() {
+        ConnectivityManager conMgr =  (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        {
+            NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
+
+            if (netInfo == null)
+            {
+
+                return false;
+
+            }
+            else
+            {
+                return true;
+
+            }
+
+        }
     }
 
     private void checkTheLogic(Boolean foundinServer, Boolean foundinOrderSite, String number, String email) {

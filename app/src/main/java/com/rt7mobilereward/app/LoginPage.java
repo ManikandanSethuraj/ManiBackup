@@ -1,8 +1,11 @@
 package com.rt7mobilereward.app;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -11,6 +14,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -27,6 +31,7 @@ public class LoginPage extends AppCompatActivity {
     private EditText passWord;
     private Button cancel;
     private Button signIn;
+    public static String token;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +42,9 @@ public class LoginPage extends AppCompatActivity {
         passWord = (EditText)findViewById(R.id.password_edit);
         cancel = (Button)findViewById(R.id.btn_login_cancel);
         signIn = (Button)findViewById(R.id.btn_signin);
+
+        emailAddress.setText("testing3@testing.com");
+        passWord.setText("testing3");
 
         emailAddress.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -66,14 +74,25 @@ public class LoginPage extends AppCompatActivity {
         signIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-              final String userName = emailAddress.getText().toString();
+
+              if (isInternetAvailable()){
+                final ProgressDialog progressbar;
+
+                progressbar = new ProgressDialog(LoginPage.this);
+                progressbar.setTitle("Please Wait!!");
+                progressbar.setMessage("Logging In");
+                progressbar.setCancelable(false);
+                progressbar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                progressbar.show();
+
+                final String userName = emailAddress.getText().toString();
               final String password = passWord.getText().toString();
 
 
                 Response.ErrorListener errorListener = new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                        progressbar.dismiss();
                         String LoginError = error.toString();
                         Log.d("Login Error::",LoginError);
                         android.app.AlertDialog alertConnection = new android.app.AlertDialog.Builder(
@@ -104,11 +123,12 @@ public class LoginPage extends AppCompatActivity {
 
                     @Override
                     public void onResponse(String response) {
+                        progressbar.dismiss();
                         if (response != null) {
                         try {
                                 Log.d("Response Looking:::",response.toString());
                                 JSONObject jsonObjectResponse = new JSONObject(response);
-                            String token = jsonObjectResponse.getString("at");
+                             token = jsonObjectResponse.getString("at");
                             Log.d("AT::::::::::",token);
                             JSONObject firstObject = jsonObjectResponse.getJSONObject("all");
                                 int jsonResponse = firstObject.getInt("statusCode");
@@ -118,8 +138,13 @@ public class LoginPage extends AppCompatActivity {
 
                                     JSONObject jsonAnother = firstObject.getJSONObject("data");
                                     JSONObject jsonOther = jsonAnother.getJSONObject("user");
-                                    String Name = jsonOther.getString("firstname");
+                                    String F_Name = jsonOther.getString("firstname");
+                                    String S_Name = " " + jsonOther.getString("lastname");
+                                    String Name = F_Name.concat(S_Name);
                                     String Email = jsonOther.getString("email");
+                                    String CardNumber = jsonOther.getString("customer_card_number");
+                                    String RewardBalance = jsonOther.getString("reward_balance");
+                                    String Giftbalance = jsonOther.getString("gift_balance");
                                     Log.d("Response Value:::::::", response);
                                     Log.d("StatusCode:::::::", String.valueOf(jsonResponse));
                                     Log.d("Name", Name);
@@ -127,6 +152,10 @@ public class LoginPage extends AppCompatActivity {
                                     intent.putExtra("UserName",Name);
                                     intent.putExtra("Email",Email);
                                     intent.putExtra("Token",token);
+                                    intent.putExtra("CardNumber",CardNumber);
+                                    intent.putExtra("RewardBalance",RewardBalance);
+                                    intent.putExtra("GiftBalance",Giftbalance);
+
                                     startActivity(intent);
 
                                 } else {
@@ -151,9 +180,34 @@ public class LoginPage extends AppCompatActivity {
                 requestQueue.add(loginRequest);
                // String va = loginRequest.getHeaderFile();
                 Log.d("The Value back:::","This is nothing");
+            }else {
+                  Toast.makeText(LoginPage.this,"No Internet!! Set your Connection!!",Toast.LENGTH_LONG).show();
+              }
+
             }
         });
 
+    }
+
+    public boolean isInternetAvailable() {
+        ConnectivityManager conMgr =  (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        {
+            NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
+
+            if (netInfo == null)
+            {
+
+                return false;
+
+            }
+            else
+            {
+                return true;
+
+            }
+
+        }
     }
 
     @Override
