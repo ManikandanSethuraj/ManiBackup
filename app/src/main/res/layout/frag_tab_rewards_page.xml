@@ -52,6 +52,17 @@
             android:textAlignment="center"
             android:textColor="@color/colorBlack"
             android:text="Time"/>
+        <Button android:id="@+id/detail_refresh_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+           android:layout_gravity="center"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:layout_centerHorizontal="true"
+            android:background="@color/colorWhite"
+            android:drawableTop="@drawable/progress"
+            />
 
     </LinearLayout>
     <LinearLayout
