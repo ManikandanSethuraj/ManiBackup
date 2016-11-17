@@ -39,27 +39,29 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
             if (intent != null){
-                String email_bundle = intent.getExtras().getString("Email");
-                String tokenid = intent.getExtras().getString("Token");
-                String username = intent.getExtras().getString("UserName");
-                String cardnumber = intent.getExtras().getString("CardNumber");
-                String rewardbalance = intent.getExtras().getString("CardNumber");
-                String giftbalance = intent.getExtras().getString("GiftBalance");
-                Log.d("Toekn::",tokenid);
-                Log.d("Email::",email_bundle);
+                if (intent.getExtras() != null) {
+                    String email_bundle = intent.getExtras().getString("Email");
+                    String tokenid = intent.getExtras().getString("Token");
+                    String username = intent.getExtras().getString("UserName");
+                    String cardnumber = intent.getExtras().getString("CardNumber");
+                    String rewardbalance = intent.getExtras().getString("RewardBalance");
+                    String giftbalance = intent.getExtras().getString("GiftBalance");
+                    Log.d("Toekn::", tokenid);
+                    Log.d("Email::", email_bundle);
 
-                bundle.putString("Eamil",email_bundle);
-                String rewardss = "";
-                bundle.putString("Token",tokenid);
-                bundle.putString("UserName",username);
-                bundle.putString("CardNumber",cardnumber);
-                bundle.putString("RewardsBalance",rewardbalance);
-                bundle.putString("GiftBalance",giftbalance);
+                    bundle.putString("Eamil", email_bundle);
+                    String rewardss = "";
+                    bundle.putString("Token", tokenid);
+                    bundle.putString("UserName", username);
+                    bundle.putString("CardNumber", cardnumber);
+                    bundle.putString("RewardsBalance", rewardbalance);
+                    bundle.putString("GiftBalance", giftbalance);
 
-                Log.d("Rewards::::",rewardbalance);
-                rewardss = bundle.getString("RewardsBalance");
-                Log.d("Rewewewe:::",rewardss);
-              //  fragTabRewardsPage.setArguments(bundle);
+                    Log.d("Rewards::::", rewardbalance);
+                    rewardss = bundle.getString("RewardsBalance");
+                    Log.d("Rewewewe:::", rewardss);
+                    //  fragTabRewardsPage.setArguments(bundle);
+                }
 
             }
 
@@ -121,6 +123,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 
     @Override
     protected void onDestroy() {

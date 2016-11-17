@@ -1,8 +1,11 @@
 package com.rt7mobilereward.app;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -35,6 +38,8 @@ public class FragTabRewardsPage extends Fragment {
     Button Reload;
     Button Settings;
     Button Refresh;
+    Handler handler = new Handler();
+    long startTime = 0L, timeSwapBuff = 0L, updateTime=0L, timeInMilliSec = 0L;
 
     public FragTabRewardsPage() {
         // Required empty public constructor
@@ -63,6 +68,7 @@ public class FragTabRewardsPage extends Fragment {
         Reload = (Button)v.findViewById(R.id.rewards_reload_btn);
         Settings = (Button)v.findViewById(R.id.rewards_settings_btn);
         Refresh =(Button)v.findViewById(R.id.detail_refresh_btn);
+        Time = (TextView)v.findViewById(R.id.time_update_rewards);
         Log.d("RewardBal::",rewardBalance);
         rewardBalance = "$"+rewardBalance;
         Balance.setText(rewardBalance);
@@ -108,10 +114,10 @@ public class FragTabRewardsPage extends Fragment {
 
                             if (response != null) {
                                 try {
-                                    Log.d("Response Looking:::",response.toString());
+                                    Log.d("ResponseatFragReward:::",response.toString());
                                     JSONObject jsonObjectResponse = new JSONObject(response);
                                     String rewardTokenResponse = jsonObjectResponse.getString("at");
-                                    Log.d("AT::::::::::",rewardtoken);
+                                    Log.d("ATRespnseFragRe::::",rewardtoken);
 //                                    if (rewardtoken.equals(rewardTokenResponse) ){
 //
 //                                    }else {
@@ -148,7 +154,10 @@ public class FragTabRewardsPage extends Fragment {
                 }catch (Exception e){
 
                 }finally {
+                    startTime = SystemClock.uptimeMillis();
+                    handler.postDelayed(updateTimeThread,0);
                     d.stop();
+
                 }
 
 
@@ -160,25 +169,70 @@ public class FragTabRewardsPage extends Fragment {
 
     }
 
+    Runnable updateTimeThread = new Runnable() {
+        @Override
+        public void run() {
+            timeInMilliSec = SystemClock.uptimeMillis()-startTime;
+            updateTime = timeSwapBuff+timeInMilliSec;
+            int secs = (int)(updateTime/1000);
+            int mins = secs/60;
+            int hour = mins/60;
+            secs%=60;
+            String showTime = "0";
+            if (hour <= 0 && mins <= 0) {
+                showTime = "Last updated "+secs+"s "+"ago";
+                Time.setText(showTime);
+            }else if (hour <= 0 && mins > 0){
+                showTime = "Last updated "+mins+"m "+"ago";
+                Time.setText(showTime);
+            }else if (hour > 0){
+                showTime = "Last updated "+hour+"h "+"ago";
+                Time.setText(showTime);
+            }
+            handler.postDelayed(this,0);
+        }
+    };
+
+
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+      //  outState.putString("BalanceRestore",Balance.getText().toString());
+       // outState.putString("someVarB", someVarB);
+    }
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+//        if (savedInstanceState != null) {
+//            String RestoreBalance = savedInstanceState.getString("BalanceRestore");
+//            Balance.setText(RestoreBalance);
+//        }
 
-
-
+    }
+    @Override
+    public void onPause() {
+        super.onPause();
     }
 
     @Override
     public void onStart() {
         super.onStart();
 
-     //  Balance.setText(rewardBalance);
-       Reload.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               Log.d("Clicked::","Clicked");
-           }
-       });
+    showBarcode.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(getActivity(),BarcodePage.class);
+           // String balanceValueBarcode = Balance.getText().toString();
+            intent.putExtra("BalanceValue",rewardBalance);
+            String timeValue = Time.getText().toString();
+            intent.putExtra("Time",timeValue);
+            intent.putExtra("RewardCardNumber",rewardCardNumber);
+            startActivity(intent);
+
+        }
+    });
 
 
 
