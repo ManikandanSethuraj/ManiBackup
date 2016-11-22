@@ -5,6 +5,7 @@
     android:id="@+id/content_sign_up_full_cus_acc_page"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorGreyBgm"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.rt7mobilereward.app.SignUpFullCusAccPage"
     tools:showIn="@layout/activity_sign_up_full_cus_acc_page">
@@ -209,13 +210,15 @@
             android:orientation="vertical">
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
-
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
                 android:background="@drawable/welcomepage_btn_shape"
                 android:text="Submit"
+                android:textSize="@dimen/text_size_edit"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:id="@+id/submit_signupfull"

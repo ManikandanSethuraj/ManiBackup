@@ -13,6 +13,28 @@
     <string name="str_show_bar_code">SHOW BARCODE</string>
     <string name="str_reload_btn_text">RELOAD</string>
     <string name="str_settings_btn_text">SETTINGS</string>
+    <string name="str_sign_out">SIGN OUT</string>
+    <string name="str_no_balance">No Balance in your Card</string>
+    <string name="str_update_button">UPDATE</string>
+
+    <string name="addPayment">Add Payment Method</string>
+    <string name="paymentMethods">Payment Methods</string>
+
+    <string name="endingIn">Card ending in </string>
+    <string name="progressMessage">Creating Token&#8230;</string>
+    <string name="validationErrors">Validation Errors</string>
+
+    <string name="cardNumber">Card Number</string>
+    <string name="save">Save</string>
+    <string name="cvc">CVC</string>
+
+    <string name="ok">OK</string>
+
+    <string-array name="currency_array">
+        <item>Currency (optional)</item>
+        <item>Unspecified</item>
+        <item>USD</item>
+    </string-array>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 
@@ -114,4 +136,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_barcode_page">BarcodePage</string>
+    <string name="title_activity_reload_page">RELOAD</string>
+    <string name="title_activity_settings_page">SETTINGS</string>
+    <string name="title_activity_edit_personal_info">UPDATE INFO</string>
 </resources>

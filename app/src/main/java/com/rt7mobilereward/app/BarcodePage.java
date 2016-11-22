@@ -82,8 +82,8 @@ public class BarcodePage extends AppCompatActivity {
             brightness = 255;
         }
         Log.d("BrightSecond", String.valueOf(brightness));
-        ContentResolver cResolver = this.getApplicationContext().getContentResolver();
-        Settings.System.putInt(cResolver, Settings.System.SCREEN_BRIGHTNESS, brightness);
+//        ContentResolver cResolver = this.getApplicationContext().getContentResolver();
+//        Settings.System.putInt(cResolver, Settings.System.SCREEN_BRIGHTNESS, brightness);
 
     }
 

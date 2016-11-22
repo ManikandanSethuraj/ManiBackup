@@ -32,6 +32,8 @@ public class FragTabRewardsPage extends Fragment {
     String rewardBalance = "";
     String rewardCardNumber = "";
     String rewardtoken = "";
+    String userNameRewards = "";
+    String userEmailRewards = "";
     TextView Balance;
     TextView Time;
     Button showBarcode;
@@ -39,6 +41,10 @@ public class FragTabRewardsPage extends Fragment {
     Button Settings;
     Button Refresh;
     Handler handler = new Handler();
+    Double rewardFloat = 0.0;
+    Double giftFloat = 0.0;
+
+    String timeValue = "";
     long startTime = 0L, timeSwapBuff = 0L, updateTime=0L, timeInMilliSec = 0L;
 
     public FragTabRewardsPage() {
@@ -60,6 +66,12 @@ public class FragTabRewardsPage extends Fragment {
        rewardBalance = getArguments().getString("RewardsBalance");
         rewardCardNumber = getArguments().getString("CardNumber");
         rewardtoken = getArguments().getString("Token");
+        userNameRewards = getArguments().getString("UserName");
+        userEmailRewards = getArguments().getString("Email");
+
+
+
+
 
         Log.d("RewardBal::",rewardBalance);
         View v =  inflater.inflate(R.layout.frag_tab_rewards_page, container, false);
@@ -70,8 +82,10 @@ public class FragTabRewardsPage extends Fragment {
         Refresh =(Button)v.findViewById(R.id.detail_refresh_btn);
         Time = (TextView)v.findViewById(R.id.time_update_rewards);
         Log.d("RewardBal::",rewardBalance);
-        rewardBalance = "$"+rewardBalance;
-        Balance.setText(rewardBalance);
+         String  showrewardBalance = "$"+rewardBalance;
+        Balance.setText(showrewardBalance);
+        startTime = SystemClock.uptimeMillis();
+        handler.postDelayed(updateTimeThread,0);
         final String GET_BALANCE_REQUEST_URL = "https://devdbcenter.rt7.net:7293/api/mobile/user/getbalance?cardnum=".concat(rewardCardNumber);
         Refresh.setOnClickListener(new View.OnClickListener() {
 
@@ -118,17 +132,19 @@ public class FragTabRewardsPage extends Fragment {
                                     JSONObject jsonObjectResponse = new JSONObject(response);
                                     String rewardTokenResponse = jsonObjectResponse.getString("at");
                                     Log.d("ATRespnseFragRe::::",rewardtoken);
-//                                    if (rewardtoken.equals(rewardTokenResponse) ){
-//
-//                                    }else {
-//                                        rewardtoken = rewardTokenResponse;
-//                                    }
+
                                     JSONObject firstObject = jsonObjectResponse.getJSONObject("all");
                                     int jsonResponse = firstObject.getInt("statusCode");
                                     if (jsonResponse == 0) {
                                         JSONObject jsonAnother = firstObject.getJSONObject("data");
-                                        String rewardBalanceResponse = jsonAnother.getString("reward_balance");
-                                        rewardBalance = "$"+rewardBalanceResponse;
+                                        String rewardBalanceResponse = jsonAnother.optString("reward_balance","0");
+                                        String giftBalanceResponse = jsonAnother.optString("gift_balance","0");
+
+                                       // rewardBalance = "$"+rewardBalanceResponse;
+                                        rewardFloat = Double.valueOf(rewardBalanceResponse);
+                                        giftFloat = Double.valueOf(giftBalanceResponse);
+                                        Double addboth = rewardFloat + giftFloat;
+                                        rewardBalance = "$" + addboth.toString();
                                         Balance.setText(rewardBalance);
 
 
@@ -147,9 +163,9 @@ public class FragTabRewardsPage extends Fragment {
                         }
                     };
 
-                    GetBalanceRequest loginRequest = new GetBalanceRequest(GET_BALANCE_REQUEST_URL,rewardtoken, responseListener, errorListener);
+                    GetBalanceRequest getBalanceRequest = new GetBalanceRequest(GET_BALANCE_REQUEST_URL,rewardtoken, responseListener, errorListener);
                     RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
-                    requestQueue.add(loginRequest);
+                    requestQueue.add(getBalanceRequest);
 
                 }catch (Exception e){
 
@@ -226,7 +242,7 @@ public class FragTabRewardsPage extends Fragment {
             Intent intent = new Intent(getActivity(),BarcodePage.class);
            // String balanceValueBarcode = Balance.getText().toString();
             intent.putExtra("BalanceValue",rewardBalance);
-            String timeValue = Time.getText().toString();
+            timeValue = Time.getText().toString();
             intent.putExtra("Time",timeValue);
             intent.putExtra("RewardCardNumber",rewardCardNumber);
             startActivity(intent);
@@ -234,7 +250,52 @@ public class FragTabRewardsPage extends Fragment {
         }
     });
 
+    Reload.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intentReload = new Intent(getActivity(),ReloadPage.class);
+            intentReload.putExtra("BalanceValue",rewardBalance);
+            timeValue = Time.getText().toString();
+            intentReload.putExtra("Time",timeValue);
+            intentReload.putExtra("CardNumber",rewardCardNumber);
+            startActivity(intentReload);
 
+        }
+    });
+
+   Settings.setOnClickListener(new View.OnClickListener() {
+       @Override
+       public void onClick(View v) {
+           Intent intentSettings = new Intent(getActivity(),SettingsPage.class);
+           intentSettings.putExtra("usernameRewards",userNameRewards);
+           Log.d("Username::",userNameRewards);
+           intentSettings.putExtra("userEmailRewards",userEmailRewards);
+           intentSettings.putExtra("RewardToken",rewardtoken);
+           intentSettings.putExtra("CardNumber",rewardCardNumber);
+           startActivity(intentSettings);
+       }
+   });
+
+
+   Balance.setOnClickListener(new View.OnClickListener() {
+       @Override
+       public void onClick(View v) {
+
+           String firstLine = "Reward Balance : $ " + rewardFloat;
+           String lastLine = "Gift Balance :$ " + giftFloat;
+           android.app.AlertDialog alertConnection = new android.app.AlertDialog.Builder(
+                   getActivity()).create();
+           alertConnection.setTitle("Balance");
+           alertConnection.setMessage(firstLine +"\n"+lastLine);
+           alertConnection.setButton("OK", new DialogInterface.OnClickListener() {
+               public void onClick(DialogInterface dialog, int which) {
+
+               }
+           });
+           alertConnection.show();
+
+       }
+   });
 
 
     }

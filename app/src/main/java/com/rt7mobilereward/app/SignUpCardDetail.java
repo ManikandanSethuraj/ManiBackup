@@ -53,6 +53,7 @@ public class SignUpCardDetail extends AppCompatActivity {
                 Gravity.CENTER);
 
 
+
         TextView Title = (TextView) view.findViewById(R.id.myTitle);
         Title.setText(R.string.str_sign_up);
 

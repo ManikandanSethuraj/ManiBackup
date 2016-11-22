@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:id="@+id/twoway_id"
+    android:background="@color/colorWhite"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+<org.lucasr.twowayview.TwoWayView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/reloadamount_items"
+    style="@style/TwoWayView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:drawSelectorOnTop="false"
+    android:layout_gravity="center"
+    tools:context="com.rt7mobilereward.app.FragReloadAmount" />
+</LinearLayout>
+
+
+    <!--android:drawSelectorOnTop="false"-->

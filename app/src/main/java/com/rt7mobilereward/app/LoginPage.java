@@ -38,6 +38,8 @@ public class LoginPage extends AppCompatActivity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_login_page);
 
+
+
         emailAddress = (EditText)findViewById(R.id.email_id_edit);
         passWord = (EditText)findViewById(R.id.password_edit);
         cancel = (Button)findViewById(R.id.btn_login_cancel);
@@ -138,13 +140,21 @@ public class LoginPage extends AppCompatActivity {
 
                                     JSONObject jsonAnother = firstObject.getJSONObject("data");
                                     JSONObject jsonOther = jsonAnother.getJSONObject("user");
-                                    String F_Name = jsonOther.getString("firstname");
-                                    String S_Name = " " + jsonOther.getString("lastname");
+                                    String F_Name = jsonOther.optString("firstname"," ");
+                                    String S_Name = " " + jsonOther.optString("lastname"," ");
                                     String Name = F_Name.concat(S_Name);
-                                    String Email = jsonOther.getString("email");
-                                    String CardNumber = jsonOther.getString("customer_card_number");
-                                    String RewardBalance = jsonOther.getString("reward_balance");
-                                    String Giftbalance = jsonOther.getString("gift_balance");
+                                    String Email = jsonOther.optString("email"," ");
+                                    String CardNumber = jsonOther.optString("customer_card_number"," ");
+                                    String RewardBalance = jsonOther.optString("reward_balance","0");
+                                    String Giftbalance = jsonOther.optString("gift_balance","0");
+                                    String City = jsonOther.optString("city"," ");
+                                    String State = jsonOther.optString("state"," ");
+                                    String zip = jsonOther.optString("zip"," ");
+                                    String dob = jsonOther.optString("date_of_birth"," ");
+                                    String Address1 = jsonOther.optString("address1"," ");
+                                    String Address2 = jsonOther.optString("address2"," ");
+                                    String Phone = jsonOther.optString("phone"," ");
+
                                     Log.d("Response Value:::::::", response);
                                     Log.d("StatusCode:::::::", String.valueOf(jsonResponse));
                                     Log.d("Name", Name);
@@ -153,8 +163,21 @@ public class LoginPage extends AppCompatActivity {
                                     intent.putExtra("Email",Email);
                                     intent.putExtra("Token",token);
                                     intent.putExtra("CardNumber",CardNumber);
-                                    intent.putExtra("RewardBalance",RewardBalance);
+                                   if (RewardBalance != null){
+                                       intent.putExtra("RewardBalance",RewardBalance);
+                                   }
+
                                     intent.putExtra("GiftBalance",Giftbalance);
+                                    intent.putExtra("City",City);
+                                    intent.putExtra("State",State);
+                                    intent.putExtra("Zip",zip);
+                                    intent.putExtra("dob",dob);
+                                    intent.putExtra("Address1",Address1);
+                                    intent.putExtra("Address2",Address2);
+                                    intent.putExtra("Phone",Phone);
+                                    intent.putExtra("F_Name",F_Name);
+                                    intent.putExtra("L_name",S_Name);
+
 
                                     startActivity(intent);
 

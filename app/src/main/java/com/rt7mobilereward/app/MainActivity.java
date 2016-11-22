@@ -46,16 +46,34 @@ public class MainActivity extends AppCompatActivity {
                     String cardnumber = intent.getExtras().getString("CardNumber");
                     String rewardbalance = intent.getExtras().getString("RewardBalance");
                     String giftbalance = intent.getExtras().getString("GiftBalance");
+                    String city =  intent.getExtras().getString("City");
+                    String state = intent.getExtras().getString("State");
+                    String zip =  intent.getExtras().getString("Zip");
+                    String dob = intent.getExtras().getString("dob");
+                    String address1 =  intent.getExtras().getString("Address1");
+                    String address2 = intent.getExtras().getString("Address2");
+                    String phone = intent.getExtras().getString("Phone");
+                    String fname = intent.getExtras().getString("F_Name");
+                    String lname = intent.getExtras().getString("L_name");
                     Log.d("Toekn::", tokenid);
                     Log.d("Email::", email_bundle);
 
-                    bundle.putString("Eamil", email_bundle);
+                    bundle.putString("Email", email_bundle);
                     String rewardss = "";
                     bundle.putString("Token", tokenid);
                     bundle.putString("UserName", username);
                     bundle.putString("CardNumber", cardnumber);
                     bundle.putString("RewardsBalance", rewardbalance);
                     bundle.putString("GiftBalance", giftbalance);
+                    bundle.putString("city",city);
+                    bundle.putString("state", state);
+                    bundle.putString("zip",zip);
+                    bundle.putString("dob",dob);
+                    bundle.putString("address1",address1);
+                    bundle.putString("address2",address2);
+                    bundle.putString("phone",phone);
+                    bundle.putString("fname",fname);
+                    bundle.putString("lname",lname);
 
                     Log.d("Rewards::::", rewardbalance);
                     rewardss = bundle.getString("RewardsBalance");
