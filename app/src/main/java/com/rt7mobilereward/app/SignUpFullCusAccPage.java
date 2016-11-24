@@ -147,6 +147,7 @@ public class SignUpFullCusAccPage extends AppCompatActivity {
         submitSuf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("Clicked","Clicked");
                 firstName = firstNameSuf.getText().toString();
                 lastName = lastNameSuf.getText().toString();
                 address1 = address1Suf.getText().toString();
@@ -228,7 +229,7 @@ public class SignUpFullCusAccPage extends AppCompatActivity {
                     Log.d("testerror", ":::" + statusCode + "::::" + networkResponse.data);
                     Log.d("testerror", ":::" + statusCode + "::::" + networkResponse);
 
-                    if (networkResponse != null) {
+                    if (error != null) {
                       //  int statusCode = error.networkResponse.statusCode;
                         //  NetworkResponse networkResponse = error.networkResponse;
                         Log.d("testerror", ":::" + statusCode + "::::" + networkResponse.data);
@@ -255,10 +256,12 @@ public class SignUpFullCusAccPage extends AppCompatActivity {
                         }else
                         {
                             showToast("Other Error");
+                            finish();
                         }
                     }
                 }else {
                  showToast("Server Error, Try later !!");
+                 finish();
              }
             }
 

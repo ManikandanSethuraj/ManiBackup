@@ -7,6 +7,8 @@ import com.android.volley.NetworkResponse;
 import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
 
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,7 +18,7 @@ import java.util.Map;
 
 public class UpdateUserRequest extends StringRequest {
 
-    private static final String UPDATE_USER_REQUEST_URL = "https://devdbcenter.rt7.net:7293/api/mobile/login";
+    private static final String UPDATE_USER_REQUEST_URL = "https://devdbcenter.rt7.net:7293/api/mobile/user/updateuser";
     private static final String API_KEY = "09Afi504Nz6gYU2hGBohMtLKG3HwAjRPF";
     private static final String ENTITY_API_KEY = "09Alb0A7k1dsXFZWyRnvtjoL8VzY2kuVP";
     private Map<String, String> prams;
@@ -24,10 +26,36 @@ public class UpdateUserRequest extends StringRequest {
 
 
 
-    public UpdateUserRequest(String tokenValue, Response.Listener<String> listener, Response.ErrorListener errorListener){
-        super(Method.POST,UPDATE_USER_REQUEST_URL,listener,errorListener);
+    public UpdateUserRequest(String tokenValue, JSONObject objectValue,
+                             Response.Listener<String> listener, Response.ErrorListener errorListener){
+        super(Method.PUT,UPDATE_USER_REQUEST_URL,listener,errorListener);
         headerFile = tokenValue;
+        prams = new HashMap<>();
+        prams.put("user",objectValue.toString());
+        Log.d("Sending Value:",objectValue.toString());
+       // prams.put(objectValue.toString());
+
     }
+
+//    public UpdateUserRequest(String tokenValue,String firstnameuur,String lastnameuur,String carduur,
+//            String emailuur,String address1uur,String address2uur,String cityuur,String stateuur,
+//                             String zipuur,String phoneuur,String dobuur,
+//                             Response.Listener<String> listener, Response.ErrorListener errorListener){
+//        super(String.valueOf(Method.PUT),UPDATE_USER_REQUEST_URL,listener,errorListener);
+//        headerFile = tokenValue;
+//        prams = new HashMap<>();
+//        prams.put("customer_card_number",carduur);
+//        prams.put("firstname",firstnameuur);
+//        prams.put("lastname",lastnameuur);
+//        prams.put("email",emailuur);
+//        prams.put("address1",address1uur);
+//        prams.put("address2",address2uur);
+//        prams.put("city",cityuur);
+//        prams.put("state",stateuur);
+//        prams.put("zip",zipuur);
+//        prams.put("phone",phoneuur);
+//        prams.put("date_of_birth",dobuur);
+//    }
 
 
 
@@ -49,6 +77,8 @@ public class UpdateUserRequest extends StringRequest {
         Log.d("params",prams.toString());
         return prams;
     }
+
+
 
     @Override
     protected void deliverResponse(String response) {

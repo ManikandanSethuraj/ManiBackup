@@ -1,6 +1,7 @@
 package com.rt7mobilereward.app;
 
 
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -25,6 +26,9 @@ public class ReloadPage extends AppCompatActivity implements FragReloadAmount.on
     LinearLayout clickReloadLayout;
     LinearLayout clickForCreditCard;
     TextView showRelaodData;
+    ObjectAnimator moveDownAnim;
+    ObjectAnimator moveUpAnim;
+    ObjectAnimator moveUpFirst;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +36,8 @@ public class ReloadPage extends AppCompatActivity implements FragReloadAmount.on
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
+
 //        View view = getLayoutInflater().inflate(R.layout.title_bar, null);
 //        ActionBar.LayoutParams params = new ActionBar.LayoutParams(
 //                ActionBar.LayoutParams.MATCH_PARENT,
@@ -53,12 +59,15 @@ public class ReloadPage extends AppCompatActivity implements FragReloadAmount.on
         fragReloadAmount = new FragReloadAmount();
         fragCreditCardRelaod = new FragCreditCardRelaod();
         showRelaodData = (TextView)findViewById(R.id.reload_amount_getdata);
+        ReloadClick = (Button)findViewById(R.id.reload_amount_button);
 //        FragmentManager fragmentManager = getFragmentManager();
 //        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 //        fragmentTransaction.commit();
         if (reloadIntent != null) {
 
-
+            moveDownAnim = ObjectAnimator.ofFloat(clickForCreditCard, "translationY", 0.F, -70);
+            moveUpAnim = ObjectAnimator.ofFloat(clickForCreditCard, "translationY", 100, 100);
+            moveUpFirst = ObjectAnimator.ofFloat(clickForCreditCard,"translationY", 0.F, -70 );
 
             rewardBalance = reloadIntent.getExtras().getString("BalanceValue");
             timeValue = reloadIntent.getExtras().getString("Time");
@@ -92,7 +101,7 @@ public class ReloadPage extends AppCompatActivity implements FragReloadAmount.on
                 textViewRoload2.setText(" ");
             }
 
-
+           moveUpFirst.start();
 
         }
 
@@ -102,6 +111,8 @@ public class ReloadPage extends AppCompatActivity implements FragReloadAmount.on
                 android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
 
               if (fragReloadAmount.isHidden()){
+
+                  moveUpAnim.start();
                   fm.beginTransaction().setCustomAnimations(R.anim.slide_in_up,R.anim.slide_out_down)
                           .replace(R.id.add_amount_in_reload,fragReloadAmount).show(fragReloadAmount)
                           .commit();
@@ -110,6 +121,7 @@ public class ReloadPage extends AppCompatActivity implements FragReloadAmount.on
                   fm.beginTransaction()
                           .hide(fragReloadAmount)
                           .commit();
+                  moveDownAnim.start();
               }
 
             }
@@ -120,6 +132,7 @@ public class ReloadPage extends AppCompatActivity implements FragReloadAmount.on
             public void onClick(View v) {
                 android.support.v4.app.FragmentManager fm1 = getSupportFragmentManager();
                 if (fragCreditCardRelaod.isHidden()){
+
                     fm1.beginTransaction().setCustomAnimations(R.anim.slide_in_up,R.anim.slide_out_down)
                             .replace(R.id.replace_creditcard,fragCreditCardRelaod).show(fragCreditCardRelaod)
                             .commit();
@@ -145,10 +158,14 @@ public class ReloadPage extends AppCompatActivity implements FragReloadAmount.on
     @Override
     public void sendData(String data) {
          showRelaodData.setText(data);
+
         android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
         fm.beginTransaction()
                 .hide(fragReloadAmount)
                 .commit();
+        String setValueforData = "RELOAD "+data;
+        ReloadClick.setText(setValueforData);
+        moveDownAnim.start();
 
     }
 

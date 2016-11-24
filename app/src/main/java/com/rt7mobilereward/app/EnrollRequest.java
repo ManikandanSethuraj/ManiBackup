@@ -43,6 +43,7 @@ public class EnrollRequest extends StringRequest {
         prams.put("password",pass);
         prams.put("date_of_birth",date);
       //  prams.put("_id",id);
+        Log.d("Full Params::","Semd");
 
 
     }

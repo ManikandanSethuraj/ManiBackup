@@ -1,8 +1,10 @@
 package com.rt7mobilereward.app;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
@@ -51,5 +53,27 @@ public class WelcomePage extends AppCompatActivity {
         if (intent != null){
             startActivity(intent);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+       // super.onBackPressed();
+
+
+       // ContextThemeWrapper ctw = new ContextThemeWrapper(this, R.style.Theme_Sphinx_Dialog_Alert);
+        AlertDialog.Builder builder = new AlertDialog.Builder(WelcomePage.this,R.style.AppCompatAlertDialogStyle);
+        builder.setIcon(android.R.drawable.ic_dialog_alert).setTitle("Exit")
+                .setMessage("Are you sure?")
+                .setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        Intent intent = new Intent(Intent.ACTION_MAIN);
+                        intent.addCategory(Intent.CATEGORY_HOME);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                        finish();
+                    }
+                }).setNegativeButton("no", null).show();
     }
 }

@@ -1,5 +1,6 @@
 package com.rt7mobilereward.app;
 
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -12,9 +13,11 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.NetworkResponse;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -23,18 +26,22 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class EditPersonalInfoPage extends AppCompatActivity {
 
     private EditText firstNameEpi, lastNameEpi, address1Epi, address2Epi, cityEpi, stateEpi, zipCodeEpi, countryEpi, phoneEpi, dateEpi, emailEpi, passEpi, cardEpi;
     private Button updateEpi;
-    private String firstName = "", lastName ="", address1 ="", address2 ="", city ="", state ="", zipCode ="", country ="",dob ="",email ="",pass = "", card ="";
-    private String phone = "";
-    final Calendar myCalendar = Calendar.getInstance();
+    private String firstNameepi = "", lastNameepi ="", address1epi ="", address2epi ="", cityepi ="", stateepi ="", zipCodeepi ="", countryepi ="",dobepi ="",emailepi ="",passepi = "", cardepi ="";
+    private String phoneepi = "";
+    final Calendar myCalendarepi = Calendar.getInstance();
     private String lastChar = " ";
-    private static String token;
+    private static String tokenEditInfo;
     private static String getTokenValue;
+    private static String tokenString;
+    private static String tokenvalue = "rt7login auth=";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,12 +73,12 @@ public class EditPersonalInfoPage extends AppCompatActivity {
             Intent getEditInfo = getIntent();
             if (getEditInfo.getExtras() != null){
 
-                token = getEditInfo.getExtras().getString("EditInfoToken");
+                tokenEditInfo = getEditInfo.getExtras().getString("EditInfoToken");
                 final ProgressDialog progressbar;
 
                 progressbar = new ProgressDialog(EditPersonalInfoPage.this);
                 progressbar.setTitle("Please Wait!!");
-                progressbar.setMessage("Logging In");
+                progressbar.setMessage("Loading Update User");
                 progressbar.setCancelable(false);
                 progressbar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                 progressbar.show();
@@ -171,11 +178,12 @@ public class EditPersonalInfoPage extends AppCompatActivity {
                 };
 
 
-                String tokenvalue = "rt7login auth=";
-                String tokenString = tokenvalue.concat(token);
+
+                tokenString = tokenvalue.concat(tokenEditInfo);
                 GetUserRequest getUserRequest = new GetUserRequest(tokenString, responseListener, errorListener);
-                RequestQueue requestQueue = Volley.newRequestQueue(EditPersonalInfoPage.this);
-                requestQueue.add(getUserRequest);
+                RequestQueue requestQueueUser = Volley.newRequestQueue(EditPersonalInfoPage.this);
+                requestQueueUser.getCache().clear();
+                requestQueueUser.add(getUserRequest);
                 // String va = loginRequest.getHeaderFile();
                 Log.d("The Value back:::","This is nothing");
             }
@@ -186,12 +194,234 @@ public class EditPersonalInfoPage extends AppCompatActivity {
         }
 
 
+
+        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
+                // TODO Auto-generated method stub
+                myCalendarepi.set(Calendar.YEAR, year);
+                myCalendarepi.set(Calendar.MONTH, monthOfYear);
+                myCalendarepi.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                updateLabel();
+            }
+
+        };
+
+
+        dateEpi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                new DatePickerDialog(EditPersonalInfoPage.this, date, myCalendarepi
+                        .get(Calendar.YEAR), myCalendarepi.get(Calendar.MONTH),
+                        myCalendarepi.get(Calendar.DAY_OF_MONTH)).show();
+                address1Epi.requestFocus();
+
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         updateEpi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+
+
+                final ProgressDialog progressbar;
+
+                progressbar = new ProgressDialog(EditPersonalInfoPage.this);
+                progressbar.setTitle("Please Wait!!");
+                progressbar.setMessage("Loading Update User");
+                progressbar.setCancelable(false);
+                progressbar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                progressbar.show();
+                dobepi= dateEpi.getText().toString().concat(" 00:00:00");
+                firstNameepi = firstNameEpi.getText().toString();
+                lastNameepi = lastNameEpi.getText().toString();
+                cardepi = cardEpi.getText().toString();
+                emailepi = emailEpi.getText().toString();
+                address1epi = address1Epi.getText().toString();
+                address2epi = address2Epi.getText().toString();
+                cityepi = cityEpi.getText().toString();
+                stateepi = stateEpi.getText().toString();
+                zipCodeepi = zipCodeEpi.getText().toString();
+                phoneepi = phoneEpi.getText().toString();
+
+
+
+
+
+                Response.ErrorListener updateEpierrorListener = new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        if (error != null )
+                        {
+                            // && error.toString().length() > 0
+                            String LoginError = error.toString();
+                            // String errordata = error.getMessage().toString();
+                            // Log.d("TheMessagefromServer",errordata);
+                            Log.d("Login Error Details:", LoginError);
+                            Log.d("Login Error::", String.valueOf(error.networkResponse));
+
+                            //int  statusCode = error.networkResponse.statusCode;
+
+                            NetworkResponse networkResponse = error.networkResponse;
+                            int statusCode = error.networkResponse.statusCode;
+                            //  NetworkResponse networkResponse = error.networkResponse;
+                            Log.d("testerror", ":::" + statusCode + "::::" + networkResponse.data);
+                            Log.d("testerror", ":::" + statusCode + "::::" + networkResponse);
+
+                            if (networkResponse != null) {
+                                //  int statusCode = error.networkResponse.statusCode;
+                                //  NetworkResponse networkResponse = error.networkResponse;
+                                Log.d("testerror", ":::" + statusCode + "::::" + networkResponse.data);
+                                Log.d("testerror", ":::" + statusCode + "::::" + networkResponse);
+
+                                if (String.valueOf(networkResponse.statusCode) == "O017") {
+
+                                } else if (networkResponse.statusCode == 500){
+                                    if(error.networkResponse.data!=null) {
+                                        try {
+                                            String body = new String(error.networkResponse.data,"UTF-8");
+                                            Log.d("Boby:::::::::",body);
+                                            finish();
+
+                                        } catch (UnsupportedEncodingException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+
+                                    //  showDialog("500 Server Error", "Try Again", "OK", null, null, null);
+                                }else
+                                {
+                                    Toast.makeText(EditPersonalInfoPage.this,"Other Error",Toast.LENGTH_LONG).show();
+                                    finish();
+                                }
+                            }
+                        }else {
+                            Toast.makeText(EditPersonalInfoPage.this,"Server Error",Toast.LENGTH_LONG).show();
+                            finish();
+                        }
+
+                    }
+                };
+
+
+                final Response.Listener<String> updateEpiresponseListener = new Response.Listener<String>() {
+
+
+
+                    @Override
+                    public void onResponse(String response) {
+                        progressbar.dismiss();
+                        if (response != null) {
+                            try {
+                                Log.d("Editinfo_Look:::",response.toString());
+                                JSONObject jsonObjectResponse = new JSONObject(response);
+                                getTokenValue = jsonObjectResponse.getString("at");
+                                Log.d("AT::::::::::",getTokenValue);
+                                JSONObject firstObject = jsonObjectResponse.getJSONObject("all");
+                                int jsonResponse = firstObject.getInt("statusCode");
+
+                                if (jsonResponse == 0) {
+
+
+                                    String jsonAnother = firstObject.getString("data");
+                                    Log.d("Sucess in Update::",jsonAnother);
+                                    Toast.makeText(EditPersonalInfoPage.this,"Updated Successfully!!", Toast.LENGTH_LONG).show();
+                                    onBackPressed();
+
+                                } else {
+
+
+                                    Log.d("Response Value:::::::", response.toString());
+//
+                                }
+                            }catch(JSONException e){
+                                e.printStackTrace();
+                            }
+                        } else {
+                            Log.d("Response is Null::::", "Response is Null");
+                        }
+                    }
+                };
+
+
+
+
+
+
+
+                tokenString = tokenvalue.concat(tokenEditInfo);
+                Log.d("TokenValueEdit",tokenString);
+                Log.d("firstName",firstNameepi);
+                Log.d("firstName",lastNameepi);
+                Log.d("firstName",cardepi);
+                Log.d("firstName",emailepi);
+                Log.d("firstName",cityepi);
+                Log.d("firstName", zipCodeepi);
+                Log.d("firstName",phoneepi);
+                Log.d("firstName",dobepi);
+                final JSONObject jsonBody;
+
+                try {
+                     jsonBody = new JSONObject(" {\"customer_card_number\":\""+cardepi+"\"," +
+                            "\"name\":\""+firstNameepi+"\"," +
+                            "\"firstname\":\""+firstNameepi+"\"," +
+                            "\"lastname\":\""+lastNameepi+"\"," +
+                            "\"email\":\""+emailepi+"\"," +
+                            "\"address1\":\""+address1epi+"\"," +
+                            "\"address2\":\""+address2epi+"\"," +
+                            "\"city\":\""+cityepi+"\"," +
+                            "\"state\":\""+stateepi+"\"," +
+                            "\"zip\":\""+zipCodeepi+"\"," +
+                            "\"phone\":\""+phoneepi+"\"," +
+                            "\"date_of_birth\":\""+dobepi+"\"}}");
+                    Log.d("JSON Object",jsonBody.toString());
+                    UpdateUserRequest updateUserRequest = new UpdateUserRequest(tokenString, jsonBody,updateEpiresponseListener, updateEpierrorListener );
+//                UpdateUserRequest updateUserRequest = new UpdateUserRequest(tokenString, firstNameepi,lastNameepi,
+//                        cardepi, emailepi, address1epi, address2epi, cityepi, stateepi, zipCodeepi,phoneepi, dobepi
+//                        ,updateEpiresponseListener, updateEpierrorListener);
+                    RequestQueue requestQueue = Volley.newRequestQueue(EditPersonalInfoPage.this);
+                    requestQueue.getCache().clear();
+                    requestQueue.add(updateUserRequest);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    //{"user":
+                }
+
+
+
+
+
+
             }
         });
+
+    }
+
+
+
+    private void updateLabel() {
+
+        String myFormat = "MM/dd/yy"; //In which you need put here
+        // SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+        dateEpi.setText(dateFormat.format(myCalendarepi.getTime()));
 
     }
 

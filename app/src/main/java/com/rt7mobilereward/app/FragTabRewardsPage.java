@@ -34,6 +34,7 @@ public class FragTabRewardsPage extends Fragment {
     String rewardtoken = "";
     String userNameRewards = "";
     String userEmailRewards = "";
+    String userGiftBalance = "";
     TextView Balance;
     TextView Time;
     Button showBarcode;
@@ -68,6 +69,7 @@ public class FragTabRewardsPage extends Fragment {
         rewardtoken = getArguments().getString("Token");
         userNameRewards = getArguments().getString("UserName");
         userEmailRewards = getArguments().getString("Email");
+        userGiftBalance = getArguments().getString("GiftBalance");
 
 
 
@@ -82,7 +84,9 @@ public class FragTabRewardsPage extends Fragment {
         Refresh =(Button)v.findViewById(R.id.detail_refresh_btn);
         Time = (TextView)v.findViewById(R.id.time_update_rewards);
         Log.d("RewardBal::",rewardBalance);
-         String  showrewardBalance = "$"+rewardBalance;
+        Double balanceValueforRewards = Double.valueOf(rewardBalance)+ Double.valueOf(userGiftBalance);
+
+         String  showrewardBalance = "$"+balanceValueforRewards;
         Balance.setText(showrewardBalance);
         startTime = SystemClock.uptimeMillis();
         handler.postDelayed(updateTimeThread,0);
@@ -284,7 +288,7 @@ public class FragTabRewardsPage extends Fragment {
            String firstLine = "Reward Balance : $ " + rewardFloat;
            String lastLine = "Gift Balance :$ " + giftFloat;
            android.app.AlertDialog alertConnection = new android.app.AlertDialog.Builder(
-                   getActivity()).create();
+                   getActivity(),R.style.AppCompatAlertDialogStyle).create();
            alertConnection.setTitle("Balance");
            alertConnection.setMessage(firstLine +"\n"+lastLine);
            alertConnection.setButton("OK", new DialogInterface.OnClickListener() {

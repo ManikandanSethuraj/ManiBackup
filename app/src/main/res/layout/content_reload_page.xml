@@ -17,7 +17,8 @@
         android:layout_height="50dp"
         android:orientation="vertical"
         android:layout_marginTop="25dp"
-        android:background="@color/colorGreyBgm"
+        android:background="@drawable/elevation_grey"
+
         android:layout_marginBottom="25dp"
         android:layout_weight="1">
         <LinearLayout
@@ -25,7 +26,7 @@
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
             android:orientation="horizontal"
-            android:background="@color/colorWhite"
+            android:background="@drawable/elevation"
             android:layout_marginBottom="10dp">
 
         <ImageView
@@ -80,7 +81,8 @@
                 android:layout_height="0dp"
                 android:orientation="horizontal"
                 android:layout_weight="1"
-                android:background="@color/colorWhite"
+                android:layout_marginBottom="1dp"
+                android:background="@drawable/elevation"
                 android:id="@+id/reload_amount_click">
                 <TextView
                     android:layout_width="wrap_content"
@@ -126,6 +128,8 @@
                 android:layout_height="0dp"
                 android:orientation="horizontal"
                 android:layout_weight="1"
+                android:layout_marginBottom="3dp"
+                android:background="@drawable/elevation_grey"
                 android:id="@+id/add_amount_in_reload">
 
 
@@ -145,6 +149,8 @@
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:orientation="vertical"
+
+        android:layout_marginBottom="3dp"
         android:id="@+id/click_for_creditcard"
         android:layout_weight="1">
         <LinearLayout
@@ -153,6 +159,7 @@
             android:orientation="horizontal"
             android:layout_weight="1"
             android:background="@color/colorWhite"
+            android:layout_marginBottom="1dp"
             android:id="@+id/addpayment_click">
             <TextView
                 android:layout_width="wrap_content"
@@ -193,6 +200,8 @@
             android:layout_height="50dp"
             android:orientation="horizontal"
             android:layout_weight="1"
+            android:background="@drawable/elevation_grey"
+            android:layout_marginBottom="3dp"
             android:id="@+id/replace_creditcard">
 
 
