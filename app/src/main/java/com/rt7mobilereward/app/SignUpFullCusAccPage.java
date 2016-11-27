@@ -175,7 +175,7 @@ public class SignUpFullCusAccPage extends AppCompatActivity {
                     }else {
                         callEnrollRequest(firstName,lastName,address1,address2,city,
                                 state, zipCode,phone,card, email, pass, dob);
-
+                         Log.d("Called Called"," Called Called");
 
                     }
                 }else {
@@ -190,6 +190,7 @@ public class SignUpFullCusAccPage extends AppCompatActivity {
                         String cardName = "";
                         callEnrollRequest(firstName,lastName,address1,address2,city,
                                 state, zipCode,phone, cardName, email, pass, dob);
+                        Log.d("Called Called"," Called Called");
 
                     }
                 }
@@ -236,13 +237,13 @@ public class SignUpFullCusAccPage extends AppCompatActivity {
                         Log.d("testerror", ":::" + statusCode + "::::" + networkResponse);
 
                         if (String.valueOf(networkResponse.statusCode) == "O017") {
-                            showToast("Account created successfully !! But failed to update profile, you can update it later");
+                            showToast("Account created successfully !! But failed to update profile, you can update it later O017");
                         } else if (networkResponse.statusCode == 500){
                             if(error.networkResponse.data!=null) {
                                 try {
                                    String body = new String(error.networkResponse.data,"UTF-8");
                                     Log.d("Boby:::::::::",body);
-                                    showToast("Your Account is created, but unable to update your profile, You Can Update it later");
+                                    showToast("Your Account is created, but unable to update your profile, You Can Update it later Error 500");
                                     Intent intent = null;
                                     intent = new Intent(SignUpFullCusAccPage.this,LoginPage.class);
                                     startActivity(intent);
@@ -296,7 +297,7 @@ public class SignUpFullCusAccPage extends AppCompatActivity {
                             intent.putExtra("Token",token);
                             intent.putExtra("Email",emailintent);
                             intent.putExtra("Name",Name);
-
+                            Log.d("Called Called"," Called Called");
                             startActivity(intent);
 
                         } else {

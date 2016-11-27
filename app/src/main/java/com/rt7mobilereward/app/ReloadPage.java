@@ -2,6 +2,8 @@ package com.rt7mobilereward.app;
 
 
 import android.animation.ObjectAnimator;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -12,23 +14,57 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class ReloadPage extends AppCompatActivity implements FragReloadAmount.onSendData
+import com.android.volley.NetworkResponse;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+
+public class ReloadPage extends AppCompatActivity implements FragReloadAmount.onSendData,FragCreditCardRelaod.onSendCreditCardData
 {
     FragReloadAmount fragReloadAmount;
     FragCreditCardRelaod fragCreditCardRelaod;
     Button ReloadClick;
     TextView textViewReload;
     TextView textViewRoload2;
+    private String tokenRelaod;
     private String rewardBalance;
     private String timeValue;
     private String cardNumber;
+    private String lastName;
+    private String firstName;
+    private String email;
+    private String phone;
+    private String giftcard;
     LinearLayout clickReloadLayout;
     LinearLayout clickForCreditCard;
     TextView showRelaodData;
     ObjectAnimator moveDownAnim;
     ObjectAnimator moveUpAnim;
     ObjectAnimator moveUpFirst;
+
+    private static String creditCardNumber ="";
+    private static int monthcc = 0;
+    private static int yearcc = 0;
+    private static String cvccc = "";
+    private static Double amountToReload = 0.0;
+    private JSONObject jsonBodycredit;
+    private JSONObject jsonBodyuser;
+    private String jsonBody;
+
+    private String giftbalanceShow;
+    private String transactionIdShow;
+    private String authCodeShow;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +108,12 @@ public class ReloadPage extends AppCompatActivity implements FragReloadAmount.on
             rewardBalance = reloadIntent.getExtras().getString("BalanceValue");
             timeValue = reloadIntent.getExtras().getString("Time");
             cardNumber = reloadIntent.getExtras().getString("CardNumber");
+            giftcard = reloadIntent.getExtras().getString("CardNumber");
+            email = reloadIntent.getExtras().getString("Email");
+            lastName = reloadIntent.getExtras().getString("LastName");
+            firstName = reloadIntent.getExtras().getString("FirstName");
+            phone = reloadIntent.getExtras().getString("Phone");
+            tokenRelaod = reloadIntent.getExtras().getString("Token");
             if (cardNumber != null){
                 if (rewardBalance != null){
                     cardNumber = "My Card(" + cardNumber.substring(Math.max(0, cardNumber.length() - 4)) + ")";
@@ -146,9 +188,214 @@ public class ReloadPage extends AppCompatActivity implements FragReloadAmount.on
             }
         });
 
+        ReloadClick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+
+                 if(amountToReload != 0.0){
+                     if (creditCardNumber != null && cvccc != null && monthcc != 0 && yearcc != 0){
+                         if (creditCardNumber.length() == 14 || creditCardNumber.length() ==15 || creditCardNumber.length() ==16){
+                             if (cvccc.length() == 3){
+
+                                 SendReloadData(creditCardNumber,cvccc,monthcc,yearcc,amountToReload,lastName, firstName, email, phone, giftcard);
+
+
+                             }else {
+                                 Toast.makeText(ReloadPage.this," Error !! Check your CVC Number",Toast.LENGTH_LONG).show();
+                             }
+
+                         }else{
+                             Toast.makeText(ReloadPage.this," Error !! Check your Card Number",Toast.LENGTH_LONG).show();
+                         }
+
+                     }else {
+                         Toast.makeText(ReloadPage.this," Enter All the Details of the Credit Card",Toast.LENGTH_LONG).show();
+                     }
+                 }else
+                 {
+                     Toast.makeText(ReloadPage.this,"Reload Amount",Toast.LENGTH_LONG).show();
+                 }
+
+
+
+
+            }
+        });
+
+
+
+
 
 
     }
+
+    private void SendReloadData(String ccardNumber, String CVC, int month, int year, Double amount,  String lastname, String firstname, String sendemail,
+                                String phone, String card) {
+
+
+        final ProgressDialog progressbar;
+
+        progressbar = new ProgressDialog(ReloadPage.this,R.style.AppCompatAlertDialogStyle);
+        progressbar.setTitle("Please Wait!!");
+        progressbar.setMessage("Logging In");
+        progressbar.setCancelable(false);
+        progressbar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressbar.show();
+        Response.ErrorListener topupgifterrorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                if (error != null )
+                {
+                    progressbar.dismiss();
+                    // && error.toString().length() > 0
+                    String LoginError = error.toString();
+                    // String errordata = error.getMessage().toString();
+                    // Log.d("TheMessagefromServer",errordata);
+                    Log.d("Login Error Details:", LoginError);
+                    Log.d("Login Error::", String.valueOf(error.networkResponse));
+
+                    //int  statusCode = error.networkResponse.statusCode;
+
+                    NetworkResponse networkResponse = error.networkResponse;
+                   // int statusCode = error.networkResponse.statusCode;
+                    //  NetworkResponse networkResponse = error.networkResponse;
+                 //   Log.d("testerror", ":::" + statusCode + "::::" + networkResponse.data);
+                  //  Log.d("testerror", ":::" + statusCode + "::::" + networkResponse);
+
+                    if (networkResponse != null) {
+                        //  int statusCode = error.networkResponse.statusCode;
+                        //  NetworkResponse networkResponse = error.networkResponse;
+                     //   Log.d("testerror", ":::" + statusCode + "::::" + networkResponse.data);
+                    //    Log.d("testerror", ":::" + statusCode + "::::" + networkResponse);
+
+                        if (String.valueOf(networkResponse.statusCode) == "I028") {
+
+
+
+                        } else if (networkResponse.statusCode == 500){
+                            if(error.networkResponse.data!=null) {
+                                try {
+                                    String body = new String(error.networkResponse.data,"UTF-8");
+                                    Log.d("Boby:::::::::",body);
+                                    finish();
+
+                                } catch (UnsupportedEncodingException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
+                            //  showDialog("500 Server Error", "Try Again", "OK", null, null, null);
+                        }else
+                        {
+                            Toast.makeText(ReloadPage.this,"Server Error",Toast.LENGTH_LONG).show();
+                            finish();
+                        }
+                    }
+                }else {
+                    Toast.makeText(ReloadPage.this,"Server Error",Toast.LENGTH_LONG).show();
+                    finish();
+                }
+
+            }
+        };
+
+
+        final Response.Listener<String> topupgiftresponseListener = new Response.Listener<String>() {
+
+
+
+            @Override
+            public void onResponse(String response) {
+                progressbar.dismiss();
+                if (response != null) {
+                    try {
+                        Log.d("Editinfo_Look:::",response.toString());
+                        JSONObject jsonObjectResponse = new JSONObject(response);
+                        String getTokenValue = jsonObjectResponse.getString("at");
+                        Log.d("AT::::::::::",getTokenValue);
+                        JSONObject firstObject = jsonObjectResponse.getJSONObject("all");
+                        int jsonResponse = firstObject.getInt("statusCode");
+
+                        if (jsonResponse == 0) {
+                               JSONObject secondObject = firstObject.getJSONObject("data");
+                              giftbalanceShow = secondObject.getString("gift_balance");
+                            transactionIdShow = secondObject.getString("transactionId");
+                            authCodeShow = secondObject.getString("authCode");
+
+                            android.app.AlertDialog alertConnection = new android.app.AlertDialog.Builder(
+                                    ReloadPage.this,R.style.AppCompatAlertDialogStyle).create();
+                            alertConnection.setTitle("Transaction Success !!");
+                            alertConnection.setMessage("Gift Balance: $ "+giftbalanceShow+"."+"\n"+
+                                    "Transaction Id: "+transactionIdShow+"."+"\n"+
+                                    "Authorization Code: "+authCodeShow+".");
+                            alertConnection.setButton("OK", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                }
+                            });
+                            alertConnection.show();
+
+//                            String jsonAnother = firstObject.getString("data");
+//                            Log.d("Sucess in Update::",jsonAnother);
+//                            Toast.makeText(ReloadPage.this,"Updated Successfully!!", Toast.LENGTH_LONG).show();
+//                            onBackPressed();
+
+                        } else {
+
+
+                            Log.d("Response Value:::::::", response.toString());
+//
+                        }
+                    }catch(JSONException e){
+                        e.printStackTrace();
+                    }
+                } else {
+                    Log.d("Response is Null::::", "Response is Null");
+                }
+            }
+        };
+
+
+
+
+
+
+
+
+
+
+        try {
+            jsonBodycredit = new JSONObject("{\"ccNum\":\""+
+                    ccardNumber+"\"," +
+                    "\"ccCvv\":\""+CVC+"\"," +
+                    "\"expMonth\":\""+month+"\"," +
+                    "\"expYear\":\""+year+"\"," +
+                    "\"amount\":\""+amount+"\"}");
+
+            jsonBodyuser = new JSONObject("{\"firstName\":\""+
+                    firstname+"\"," +
+                    "\"lastname\":\""+lastname+"\"," +
+                    "\"email\":\""+sendemail+"\"," +
+                    "\"phone\":\""+phone+"\"}");
+            jsonBody = card;
+
+
+
+            Log.d("JSON Object",jsonBody.toString());
+            TopupGiftWithCreditRequest topupGiftWithCreditRequest = new TopupGiftWithCreditRequest(jsonBodycredit, jsonBodyuser, jsonBody,tokenRelaod, topupgiftresponseListener, topupgifterrorListener );
+            RequestQueue requestQueue = Volley.newRequestQueue(ReloadPage.this);
+            requestQueue.getCache().clear();
+            requestQueue.add(topupGiftWithCreditRequest);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
 
     @Override
     public void onBackPressed() {
@@ -165,8 +412,24 @@ public class ReloadPage extends AppCompatActivity implements FragReloadAmount.on
                 .commit();
         String setValueforData = "RELOAD "+data;
         ReloadClick.setText(setValueforData);
+        amountToReload = Double.valueOf(data.substring(1));
         moveDownAnim.start();
 
     }
 
+
+
+    @Override
+    public void sendData(String cardNumber, int month, int year, String cvc) {
+
+        creditCardNumber = cardNumber;
+        monthcc = month;
+        yearcc = year;
+        cvccc = cvc;
+        android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
+        fm.beginTransaction()
+                .hide(fragCreditCardRelaod)
+                .commit();
+
+    }
 }

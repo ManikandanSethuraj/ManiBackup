@@ -35,6 +35,9 @@ public class FragTabRewardsPage extends Fragment {
     String userNameRewards = "";
     String userEmailRewards = "";
     String userGiftBalance = "";
+    String userPhone = "";
+    String userFName = "";
+    String userLName = "";
     TextView Balance;
     TextView Time;
     Button showBarcode;
@@ -70,6 +73,9 @@ public class FragTabRewardsPage extends Fragment {
         userNameRewards = getArguments().getString("UserName");
         userEmailRewards = getArguments().getString("Email");
         userGiftBalance = getArguments().getString("GiftBalance");
+        userPhone = getArguments().getString("phone");
+        userFName = getArguments().getString("fname");
+        userLName = getArguments().getString("lname");
 
 
 
@@ -262,6 +268,12 @@ public class FragTabRewardsPage extends Fragment {
             timeValue = Time.getText().toString();
             intentReload.putExtra("Time",timeValue);
             intentReload.putExtra("CardNumber",rewardCardNumber);
+            intentReload.putExtra("Phone",userPhone);
+            intentReload.putExtra("Email",userEmailRewards);
+            intentReload.putExtra("FullName",userNameRewards);
+            intentReload.putExtra("FirstName",userFName);
+            intentReload.putExtra("LastName",userLName);
+            intentReload.putExtra("Token",rewardtoken);
             startActivity(intentReload);
 
         }

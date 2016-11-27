@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 <HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:gravity="center_horizontal"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:background="@color/colorWhite"
+    android:scrollbars="none"
     android:paddingLeft="8dp"
     android:paddingRight="8dp">
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -14,18 +19,18 @@
         android:layout_height="fill_parent"
         android:paddingLeft="8dp"
         android:paddingRight="8dp">
-    <EditText android:id="@+id/number" style="@style/CardNumber"   android:nextFocusForward="@+id/expMonth" />
+    <EditText android:id="@+id/number" style="@style/CardNumber"  android:layout_marginLeft="5dp" android:nextFocusForward="@+id/expMonth" android:nextFocusDown="@id/expMonth" android:maxLength="16" />
 
     <!--<LinearLayout-->
         <!--android:layout_width="fill_parent"-->
         <!--android:layout_height="wrap_content"-->
         <!--android:orientation="horizontal">-->
 
-        <Spinner android:id="@+id/expMonth" style="@style/ExpMonth" android:nextFocusForward="@+id/expYear" />
+        <Spinner android:id="@+id/expMonth" style="@style/ExpMonth"  android:layout_marginLeft="5dp" android:nextFocusForward="@+id/expYear" android:nextFocusDown="@+id/expYear" />
 
-        <Spinner android:id="@+id/expYear" style="@style/ExpYear" android:nextFocusForward="@+id/cvc" />
+        <Spinner android:id="@+id/expYear" style="@style/ExpYear"  android:layout_marginLeft="5dp" android:nextFocusForward="@+id/cvc" android:nextFocusDown="@+id/cvc"/>
 
-        <EditText android:id="@+id/cvc" style="@style/CVC" android:nextFocusForward="@+id/currency" />
+        <EditText android:id="@+id/cvc" style="@style/CVC"  android:layout_marginLeft="5dp" android:inputType="number" android:maxLength="3" android:nextFocusDown="@+id/save"/>
 
 
     <!--</LinearLayout>-->
@@ -33,9 +38,18 @@
         <!--android:layout_width="wrap_content"-->
         <!--android:layout_height="wrap_content"-->
         <!--android:orientation="horizontal">-->
-        <Spinner android:id="@+id/currency" style="@style/Currency"  android:nextFocusForward="@+id/save" />
+        <!--<Spinner android:id="@+id/currency" style="@style/Currency"  android:nextFocusForward="@+id/save" />-->
+        <!--android:nextFocusForward="@+id/currency"-->
     <!--</LinearLayout>-->
-    <Button android:id="@+id/save" style="@style/Save"/>
+    <!--<Button android:id="@+id/save"  android:layout_marginLeft="3dp" style="@style/Save" android:layout_marginBottom="4dp" android:layout_marginTop="4dp"/>-->
 
 </LinearLayout>
   </HorizontalScrollView>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ok_creditcard"
+        android:text="OK"
+        android:background="@color/colorGreen"
+        android:textColor="@color/colorWhite"/>
+   </LinearLayout>
